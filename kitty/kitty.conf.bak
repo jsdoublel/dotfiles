@@ -1,0 +1,29 @@
+# kitty.conf
+
+## Settings
+# cursor_shape block
+# shell_integration no-cursor
+ 
+font_family Fira Code
+font_size 11
+# modify_font cell_height -4px
+
+background_blur 0
+background_opacity 0.7
+
+enable_audio_bell no
+
+# hide_window_decorations yes
+
+## Mappings
+action_alias launch_tab launch --type=tab --cwd=current
+map f1 launch_tab nvim
+# map f2 launch_tab "ssh jamessw3@cc-login.campuscluster.illinois.edu"
+# map f3 launch_tab top
+# map f4 launch_tab obstart
+
+
+# BEGIN_KITTY_THEME
+# Campbell
+include current-theme.conf
+# END_KITTY_THEME
