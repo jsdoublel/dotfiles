@@ -36,8 +36,8 @@ def main():
         title = data["xesam:title"]
 
         perc = current / length
-        progress = progressBar(perc)
-        bar = f" [ {title} ]  {status} {progress}"
+        # progress = progressBar(perc)
+        bar = f" {title}"
         print(bar)
 
 if __name__ == "__main__":

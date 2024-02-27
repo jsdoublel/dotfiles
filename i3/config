@@ -333,7 +333,7 @@ workspace $ws2 output $disp2
 
 # bind program to workspace and focus to them on startup:
 assign [class="kitty"] $ws1
-assign [class="(?i)chromium"] $ws2
+# assign [class="(?i)chromium"] $ws2
 assign [class="discord"] $ws3
 assign [class="steam"] $ws4
 assign [class="obsidian"] $ws5
@@ -346,6 +346,11 @@ for_window [class=kitty] focus
 for_window [class=(?i)chromium] focus
 for_window [class=steam] focus
 for_window [class=obsidian] focus
+
+# launch in full screen
+for_window [class=discord] fullscreen enable
+for_window [class=obsidian] fullscreen enable
+for_window [class=steam] fullscreen enable
 # for_window [class=Thunar] focus
 # for_window [class=Thunderbird] focus
 # for_window [class=TelegramDesktop] focus
