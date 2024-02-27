@@ -329,11 +329,11 @@ set $disp1 "DP-2"
 set $disp2 "DP-4"
 
 workspace $ws3 output $disp2
-workspace $ws2 output $disp2
+# workspace $ws2 output $disp2
 
 # bind program to workspace and focus to them on startup:
 assign [class="kitty"] $ws1
-# assign [class="(?i)chromium"] $ws2
+assign [class="(?i)chromium"] $ws2
 assign [class="discord"] $ws3
 assign [class="steam"] $ws4
 assign [class="obsidian"] $ws5
@@ -600,8 +600,8 @@ bar {
 ## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
 
 bindsym $mod+d exec --no-startup-id dmenu_run -i -nb '#000000' -nf '#ffffff' -sb '#969696' -sf '#000000' -fn 'GoMono:pixelsize=15'
-# bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun \
-# 		-config ~/.config/rofi/rofidmenu.rasi
+bindsym $mod+Shift+d exec --no-startup-id rofi -modi drun -show drun \
+		-config ~/.config/rofi/rofidmenu.rasi
 
 #bindsym F9 exec --no-startup-id rofi -modi drun -show drun \
 #		-config ~/.config/rofi/rofidmenu.rasi
