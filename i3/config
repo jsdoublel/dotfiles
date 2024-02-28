@@ -348,7 +348,7 @@ for_window [class=steam] focus
 for_window [class=obsidian] focus
 
 # launch in full screen
-for_window [class=discord] fullscreen enable
+# for_window [class=discord] fullscreen enable
 for_window [class=obsidian] fullscreen enable
 for_window [class=steam] fullscreen enable
 # for_window [class=Thunar] focus
