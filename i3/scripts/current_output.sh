@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "2" = "$(pactl info | grep Logitech | wc -l)" ]; then 
+if [ "1" = "$(pactl info | grep Sink | grep Logitech | wc -l)" ]; then 
     echo ": Headphones"
 else
     echo ": Speakers  "
