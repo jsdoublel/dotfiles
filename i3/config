@@ -300,7 +300,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 
 ## App shortcuts
-bindsym $mod+w exec --no-startup-id /usr/bin/chromium
+bindsym $mod+w exec --no-startup-id /usr/bin/google-chrome-stable
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 bindsym Print exec --no-startup-id flameshot screen -r > ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
 
@@ -334,7 +334,7 @@ workspace $ws3 output $disp2
 # bind program to workspace and focus to them on startup:
 # use (?i) to match if you don't have an exact name (i think)
 assign [class="kitty"] $ws1
-assign [class="(?i)chromium"] $ws2
+assign [class="(?i)google-chrome"] $ws2
 assign [class="discord"] $ws3
 assign [class="steam"] $ws4
 assign [class="obsidian"] $ws5
@@ -345,7 +345,7 @@ assign [class="(?i)zoom"] $ws6
 
 # automatic set focus new window if it opens on another workspace than the current:
 for_window [class=kitty] focus
-for_window [class=(?i)chromium] focus
+for_window [class=(?i)google-chrome] focus
 for_window [class=steam] focus
 for_window [class=obsidian] focus
 for_window [class=(?i)zoom] focus
@@ -459,10 +459,10 @@ exec --no-startup-id openrgb -p profile
 
 # Autostart apps as you like
 exec --no-startup-id sleep 2 && kitty
-# exec --no-startup-id sleep 2 && chromium
+# exec --no-startup-id sleep 2 && google-chrome-stable
 exec --no-startup-id sleep 3 && discord
 # exec --no-startup-id sleep 5 && steam -silent
-# exec --no-startup-id sleep 7 && chromium https://github.com/endeavouros-team/endeavouros-i3wm-setup/blob/main/force-knowledge.md
+# exec --no-startup-id sleep 7 && google-chrome-stable https://github.com/endeavouros-team/endeavouros-i3wm-setup/blob/main/force-knowledge.md
 #exec --no-startup-id sleep 3 && thunar
 
 ###############
