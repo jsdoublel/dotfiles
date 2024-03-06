@@ -91,12 +91,12 @@ $line_break\
 $character"""
 
 [character]
-success_symbol = '[❯](bold grey)'
+success_symbol = '[❯](bold white)'
 
 [os]
 format = '[$symbol]($style) '
 disabled = false
-style = 'grey'
+style = '8'
 
 [aws]
 symbol = "  "
