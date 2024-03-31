@@ -96,7 +96,7 @@ success_symbol = '[❯](bold white)'
 [os]
 format = '[$symbol]($style) '
 disabled = false
-style = '8'
+style = '248'
 
 [aws]
 symbol = "  "
