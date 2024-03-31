@@ -205,10 +205,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # reload openrgb profile
-bindsym $mod+Shift+g exec --no-startup-id openrgb -p profile
-
-# reload caps-to-esc
-bindsym $mod+Shift+semicolon exec --no-startup-id /usr/bin/setxkbmap -option "caps:escape_shifted_capslock"
+bindsym $mod+p exec --no-startup-id openrgb -p profile
 
 # keybinding in fancy rofi (automated):
 # bindsym F1 exec --no-startup-id ~/.config/i3/scripts/keyhint-2
