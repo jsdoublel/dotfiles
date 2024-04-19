@@ -56,7 +56,8 @@ default_border pixel 3
 
 # Set inner/outer gaps
 gaps inner 32
-gaps outer -12
+gaps outer -16 
+# gaps outer -12
 
 # show window title bars (not officially supported with i3gaps)
 #default_border normal
@@ -573,9 +574,9 @@ bar {
 		    background         $black
 		    statusline         $white
 #                          		border 		        bg		txt		indicator
-		focused_workspace	$white              $white		$black	$purple
-		active_workspace	$lightgrey          $lightgrey  $black  $purple
-		inactive_workspace	$white              $black      $white  $purple
+		focused_workspace	$white              $white		$darkgrey	$purple
+		active_workspace	$lightgrey          $lightgrey  $darkgrey  $purple
+		inactive_workspace	$lightgrey          $darkgrey   $white  $purple
 		urgent_workspace	$urgentred	    	$urgentred	$white	$purple
 	}
 }
