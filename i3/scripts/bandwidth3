@@ -7,7 +7,7 @@
 
 iface="${BLOCK_INSTANCE}"
 iface="${IFACE:-$iface}"
-dt="${DT:-3}"
+dt="${DT:-1}"
 unit="${UNIT:-Mb}"
 LABEL="${LABEL:-<span font='FontAwesome'>  </span>}" # down arrow up arrow
 printf_command="${PRINTF_COMMAND:-"printf \"${LABEL}: %05.1f/%05.1f %s/s\\n\", rx, wx, unit;"}"

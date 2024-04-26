@@ -23,7 +23,7 @@
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Fira Sans Regular 10
+font pango:Go Mono 10
 
 # set the mod key to the winkey:
 set $mod Mod4
@@ -195,9 +195,9 @@ bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 
 # Lock the system
 # lock with a picture:
-#bindsym $mod+l exec --no-startup-id i3lock -i  ~/.config/i3/i3-lock-screen.png -p default|win -t
+bindsym $mod+o exec --no-startup-id i3lock -i ~/Pictures/Wallpaper/bnw_nebula.png 
 # lock by blurring the screen:
-# bindsym $mod+l exec --no-startup-id ~/.config/i3/scripts/blur-lock
+# bindsym $mod+o exec --no-startup-id ~/.config/i3/scripts/blur-lock
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -259,8 +259,8 @@ bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 # bindsym $mod+s layout stacking
-bindsym $mod+g layout tabbed
-bindsym $mod+e layout toggle split
+# bindsym $mod+g layout tabbed
+# bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -561,7 +561,7 @@ bar {
 # it could be that you have no primary display set: set one (xrandr --output <output> --primary)
 # reference: https://i3wm.org/docs/userguide.html#_tray_output
 		    #tray_output primary
-		    tray_padding 0
+		    tray_padding 3
 
 # When strip_workspace_numbers is set to yes,
 # any workspace that has a name of the form

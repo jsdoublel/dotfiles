@@ -65,12 +65,14 @@ enable_audio_bell no
 
 ## Mappings
 action_alias launch_tab launch --type=tab --cwd=current
-map f1 launch_tab nvim
-map f2 send_text all . ranger\r
+action_alias launch_win launch --cwd=current --type=os-window
+map f1 launch_win
+map f2 launch_win nvim
+map f3 send_text all . ranger\r
 
 enabled_layouts tall:bias=50;full_size=1;mirrored=false
 
 # BEGIN_KITTY_THEME
-# Adwaita darker
+# Nord
 include current-theme.conf
 # END_KITTY_THEME
