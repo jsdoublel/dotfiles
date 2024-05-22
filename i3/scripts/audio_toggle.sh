@@ -1,5 +1,5 @@
 #!/bin/bash
-speaker_prefix="alsa_output.pci-0000_00"
+speaker_prefix="alsa_output.pci-0000_05"
 current="$(pactl info | grep Sink: | cut -d " " -f 3)"
 if [ "1" = "$(pactl info | grep Sink: | grep Logitech | wc -l)" ]; then 
     echo "$(pactl list sinks short | grep $speaker_prefix | cut -d $'\t' -f 1)"

@@ -84,6 +84,17 @@ bindcode $mod+17    workspace  $ws8
 bindcode $mod+18    workspace  $ws9
 bindcode $mod+19    workspace  $ws10
 
+bindsym F1 workspace  $ws1
+bindsym F2 workspace  $ws2
+bindsym F3 workspace  $ws3
+bindsym F4 workspace  $ws4
+bindsym F5 workspace  $ws5
+bindsym F6 workspace  $ws6
+bindsym F7 workspace  $ws7
+bindsym F8 workspace  $ws8
+bindsym F9 workspace  $ws9
+bindsym F10 workspace  $ws10
+
 # switch to workspace with numpad keys
 bindcode $mod+87 workspace $ws1
 bindcode $mod+88 workspace $ws2
@@ -187,6 +198,12 @@ bindsym $mod+Mod1+Ctrl+h resize grow width 1 px or 1 ppt
 # start a terminal
 bindsym $mod+Return exec --no-startup-id kitty
 
+# start terminal with tmux
+bindsym $mod+t exec --no-startup-id kitty ~/.config/i3/scripts/ltmux
+
+# start terminal with nvim
+bindsym $mod+v exec --no-startup-id kitty ~/.config/i3/scripts/lvim
+
 # kill focused window
 bindsym $mod+q kill
 
@@ -252,7 +269,7 @@ bindsym $mod+Shift+Right move right
 bindsym $mod+semicolon split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+minus split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -350,8 +367,8 @@ assign [class="kitty"] $ws1
 assign [class="(?i)google-chrome"] $ws2
 assign [class="(?i)firefox"] $ws2
 assign [class="discord"] $ws3
-assign [class="steam"] $ws4
-assign [class="(?i)jetbrains-studio"] $ws4
+assign [class="steam"] $ws5
+assign [class="(?i)jetbrains-studio"] $ws5
 assign [class="obsidian"] $ws5
 assign [class="(?i)zoom"] $ws6
 # assign [class="Thunar"] $ws3
@@ -368,7 +385,7 @@ for_window [class=(?i)zoom] focus
 for_window [class=(?i)jetbrains-studio] focus
 
 # launch in full screen
-# for_window [class=discord] fullscreen enable
+for_window [class=discord] fullscreen enable
 for_window [class=obsidian] fullscreen enable
 for_window [class=steam] fullscreen enable
 # for_window [class=Thunar] focus

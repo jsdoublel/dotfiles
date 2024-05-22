@@ -1,0 +1,7 @@
+#!/bin/bash
+
+d=$(find $HOME -type d | fzf)                                                                                                                                                                   
+if [ ! -z $d ]; then
+	tmux new -s $(basename $d) -c $d
+	echo $d
+fi
