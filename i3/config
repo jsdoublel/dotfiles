@@ -55,9 +55,8 @@ default_border pixel 3
 # hide_edge_borders both
 
 # Set inner/outer gaps
-gaps inner 32
-gaps outer -16 
-# gaps outer -12
+# gaps inner 32
+# gaps outer -16 
 
 # show window title bars (not officially supported with i3gaps)
 #default_border normal
@@ -73,51 +72,51 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 
 # switch to workspace
-bindcode $mod+10    workspace  $ws1
-bindcode $mod+11    workspace  $ws2
-bindcode $mod+12    workspace  $ws3
-bindcode $mod+13    workspace  $ws4
-bindcode $mod+14    workspace  $ws5
-bindcode $mod+15    workspace  $ws6
-bindcode $mod+16    workspace  $ws7
-bindcode $mod+17    workspace  $ws8
-bindcode $mod+18    workspace  $ws9
-bindcode $mod+19    workspace  $ws10
+bindcode $mod+10    workspace  $ws1; move workspace to output primary
+bindcode $mod+11    workspace  $ws2; move workspace to output primary
+bindcode $mod+12    workspace  $ws3; move workspace to output primary
+bindcode $mod+13    workspace  $ws4; move workspace to output primary
+bindcode $mod+14    workspace  $ws5; move workspace to output primary
+bindcode $mod+15    workspace  $ws6; move workspace to output primary
+bindcode $mod+16    workspace  $ws7; move workspace to output primary
+bindcode $mod+17    workspace  $ws8; move workspace to output primary
+bindcode $mod+18    workspace  $ws9; move workspace to output primary
+bindcode $mod+19    workspace  $ws10; move workspace to output primary
 
-bindsym F1 workspace  $ws1
-bindsym F2 workspace  $ws2
-bindsym F3 workspace  $ws3
-bindsym F4 workspace  $ws4
-bindsym F5 workspace  $ws5
-bindsym F6 workspace  $ws6
-bindsym F7 workspace  $ws7
-bindsym F8 workspace  $ws8
-bindsym F9 workspace  $ws9
-bindsym F10 workspace  $ws10
+bindsym F1 workspace  $ws1; move workspace to output primary
+bindsym F2 workspace  $ws2; move workspace to output primary
+bindsym F3 workspace  $ws3; move workspace to output primary
+bindsym F4 workspace  $ws4; move workspace to output primary
+bindsym F5 workspace  $ws5; move workspace to output primary
+bindsym F6 workspace  $ws6; move workspace to output primary
+bindsym F7 workspace  $ws7; move workspace to output primary
+bindsym F8 workspace  $ws8; move workspace to output primary
+bindsym F9 workspace  $ws9; move workspace to output primary
+bindsym F10 workspace  $ws10; move workspace to output primary
 
 # switch to workspace with numpad keys
-bindcode $mod+87 workspace $ws1
-bindcode $mod+88 workspace $ws2
-bindcode $mod+89 workspace $ws3
-bindcode $mod+83 workspace $ws4
-bindcode $mod+84 workspace $ws5
-bindcode $mod+85 workspace $ws6
-bindcode $mod+79 workspace $ws7
-bindcode $mod+80 workspace $ws8
-bindcode $mod+81 workspace $ws9
-bindcode $mod+90 workspace $ws10
+bindcode $mod+87 workspace $ws1; move workspace to output primary
+bindcode $mod+88 workspace $ws2; move workspace to output primary
+bindcode $mod+89 workspace $ws3; move workspace to output primary
+bindcode $mod+83 workspace $ws4; move workspace to output primary
+bindcode $mod+84 workspace $ws5; move workspace to output primary
+bindcode $mod+85 workspace $ws6; move workspace to output primary
+bindcode $mod+79 workspace $ws7; move workspace to output primary
+bindcode $mod+80 workspace $ws8; move workspace to output primary
+bindcode $mod+81 workspace $ws9; move workspace to output primary
+bindcode $mod+90 workspace $ws10; move workspace to output primary
 
 # switch to workspace with numlock numpad keys
-bindcode $mod+Mod2+87 workspace $ws1
-bindcode $mod+Mod2+88 workspace $ws2
-bindcode $mod+Mod2+89 workspace $ws3
-bindcode $mod+Mod2+83 workspace $ws4
-bindcode $mod+Mod2+84 workspace $ws5
-bindcode $mod+Mod2+85 workspace $ws6
-bindcode $mod+Mod2+79 workspace $ws7
-bindcode $mod+Mod2+80 workspace $ws8
-bindcode $mod+Mod2+81 workspace $ws9
-bindcode $mod+Mod2+90 workspace $ws10
+bindcode $mod+Mod2+87 workspace $ws1; move workspace to output primary
+bindcode $mod+Mod2+88 workspace $ws2; move workspace to output primary
+bindcode $mod+Mod2+89 workspace $ws3; move workspace to output primary
+bindcode $mod+Mod2+83 workspace $ws4; move workspace to output primary
+bindcode $mod+Mod2+84 workspace $ws5; move workspace to output primary
+bindcode $mod+Mod2+85 workspace $ws6; move workspace to output primary
+bindcode $mod+Mod2+79 workspace $ws7; move workspace to output primary
+bindcode $mod+Mod2+80 workspace $ws8; move workspace to output primary
+bindcode $mod+Mod2+81 workspace $ws9; move workspace to output primary
+bindcode $mod+Mod2+90 workspace $ws10; move workspace to output primary
 
 # move focused container to workspace
 bindcode $mod+Shift+10    move container to workspace  $ws1
@@ -199,10 +198,10 @@ bindsym $mod+Mod1+Ctrl+h resize grow width 1 px or 1 ppt
 bindsym $mod+Return exec --no-startup-id kitty
 
 # start terminal with tmux
-bindsym $mod+t exec --no-startup-id kitty ~/.config/i3/scripts/ltmux
+bindsym $mod+t exec --no-startup-id kitty ltmux, exec --no-startup-id ~/.config/i3/scripts/i3-new-workspace -c
 
 # start terminal with nvim
-bindsym $mod+v exec --no-startup-id kitty ~/.config/i3/scripts/lvim
+bindsym $mod+v exec --no-startup-id kitty ltmux -v, exec --no-startup-id ~/.config/i3/scripts/i3-new-workspace -c
 
 # kill focused window
 bindsym $mod+q kill
@@ -385,9 +384,10 @@ for_window [class=(?i)zoom] focus
 for_window [class=(?i)jetbrains-studio] focus
 
 # launch in full screen
-for_window [class=discord] fullscreen enable
-for_window [class=obsidian] fullscreen enable
-for_window [class=steam] fullscreen enable
+# for_window [class=discord] fullscreen enable
+# for_window [class=obsidian] fullscreen enable
+# for_window [class=steam] fullscreen enable
+
 # for_window [class=Thunar] focus
 # for_window [class=Thunderbird] focus
 # for_window [class=TelegramDesktop] focus

@@ -1,7 +1,0 @@
-#!/bin/bash
-
-f=$(find $HOME -type f | fzf)                                                                                                                                                                       
-[[ -z $f ]] && exit 1
-nvim $f
-echo $f
-
