@@ -83,16 +83,16 @@ bindcode $mod+17    workspace  $ws8; move workspace to output primary
 bindcode $mod+18    workspace  $ws9; move workspace to output primary
 bindcode $mod+19    workspace  $ws10; move workspace to output primary
 
-bindsym F1 workspace  $ws1; move workspace to output primary
-bindsym F2 workspace  $ws2; move workspace to output primary
-bindsym F3 workspace  $ws3; move workspace to output primary
-bindsym F4 workspace  $ws4; move workspace to output primary
-bindsym F5 workspace  $ws5; move workspace to output primary
-bindsym F6 workspace  $ws6; move workspace to output primary
-bindsym F7 workspace  $ws7; move workspace to output primary
-bindsym F8 workspace  $ws8; move workspace to output primary
-bindsym F9 workspace  $ws9; move workspace to output primary
-bindsym F10 workspace  $ws10; move workspace to output primary
+# bindsym F1 workspace  $ws1; move workspace to output primary
+# bindsym F2 workspace  $ws2; move workspace to output primary
+# bindsym F3 workspace  $ws3; move workspace to output primary
+# bindsym F4 workspace  $ws4; move workspace to output primary
+# bindsym F5 workspace  $ws5; move workspace to output primary
+# bindsym F6 workspace  $ws6; move workspace to output primary
+# bindsym F7 workspace  $ws7; move workspace to output primary
+# bindsym F8 workspace  $ws8; move workspace to output primary
+# bindsym F9 workspace  $ws9; move workspace to output primary
+# bindsym F10 workspace  $ws10; move workspace to output primary
 
 # switch to workspace with numpad keys
 bindcode $mod+87 workspace $ws1; move workspace to output primary
@@ -198,10 +198,12 @@ bindsym $mod+Mod1+Ctrl+h resize grow width 1 px or 1 ppt
 bindsym $mod+Return exec --no-startup-id kitty
 
 # start terminal with tmux
-bindsym $mod+t exec --no-startup-id kitty ltmux, exec --no-startup-id ~/.config/i3/scripts/i3-new-workspace -c
+bindsym $mod+t exec --no-startup-id kitty ltmux
+#, exec --no-startup-id ~/.config/i3/scripts/i3-new-workspace -c
 
 # start terminal with nvim
-bindsym $mod+v exec --no-startup-id kitty ltmux -v, exec --no-startup-id ~/.config/i3/scripts/i3-new-workspace -c
+bindsym $mod+v exec --no-startup-id kitty ltmux -v
+#, exec --no-startup-id ~/.config/i3/scripts/i3-new-workspace -c
 
 # kill focused window
 bindsym $mod+q kill
@@ -285,7 +287,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus parent
 
 # open new empty workspace
 bindsym $mod+Shift+n exec --no-startup-id ~/.config/i3/scripts/empty_workspace
@@ -297,7 +299,7 @@ bindsym $mod+r move workspace to output right
 # Multimedia Keys
 
 # toggle between headphones and speakers
-bindsym F12 exec --no-startup-id ~/.config/i3/scripts/audio_toggle.sh
+bindsym $mod+a exec --no-startup-id ~/.config/i3/scripts/audio_toggle.sh
 # volume
 # use meta keys without showing osc
 #bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ && pkill -RTMIN+1 i3blocks
@@ -334,7 +336,7 @@ bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 bindsym Print exec --no-startup-id flameshot screen -r > ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
 
 # Power Profiles menu switcher (rofi)
-bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
+# bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
 
 ##########################################
 # configuration for workspace behaviour: #
@@ -491,9 +493,9 @@ exec --no-startup-id /usr/bin/dunst
 
 # Autostart apps as you like
 exec --no-startup-id openrgb -p profile
-exec --no-startup-id sleep 2 && kitty
+# exec --no-startup-id sleep 2 && kitty
 # exec --no-startup-id sleep 2 && google-chrome-stable
-exec --no-startup-id sleep 3 && discord
+exec --no-startup-id sleep 2 && discord
 # exec --no-startup-id sleep 5 && steam -silent
 # exec --no-startup-id sleep 7 && google-chrome-stable https://github.com/endeavouros-team/endeavouros-i3wm-setup/blob/main/force-knowledge.md
 #exec --no-startup-id sleep 3 && thunar
