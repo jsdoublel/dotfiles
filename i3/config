@@ -370,6 +370,7 @@ assign [class="(?i)firefox"] $ws2
 assign [class="discord"] $ws3
 assign [class="steam"] $ws5
 assign [class="(?i)jetbrains-studio"] $ws5
+assign [class="(?i)Minecraft"] $ws4
 assign [class="obsidian"] $ws5
 assign [class="(?i)zoom"] $ws6
 # assign [class="Thunar"] $ws3
@@ -383,6 +384,7 @@ for_window [class=(?i)firefox] focus
 for_window [class=steam] focus
 for_window [class=obsidian] focus
 for_window [class=(?i)zoom] focus
+for_window [class=(?i)minecraft] focus
 for_window [class=(?i)jetbrains-studio] focus
 
 # launch in full screen
