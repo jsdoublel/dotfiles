@@ -205,6 +205,10 @@ bindsym $mod+t exec --no-startup-id kitty ltmux
 bindsym $mod+v exec --no-startup-id kitty ltmux -v
 #, exec --no-startup-id ~/.config/i3/scripts/i3-new-workspace -c
 
+# start terminal with ssh-ing into the campus cluster
+bindsym $mod+c exec --no-startup-id kitty ~/.config/i3/scripts/launch_cc.sh
+# "ssh jamessw3@cc-login.campuscluster.illinois.edu"
+
 # kill focused window
 bindsym $mod+q kill
 
@@ -335,6 +339,7 @@ bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 bindsym Print exec --no-startup-id flameshot screen -r > ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
 
+bindsym $mod+m exec --no-startup-id prismlauncher
 # Power Profiles menu switcher (rofi)
 # bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
 
@@ -363,7 +368,7 @@ workspace $ws3 output $disp2
 # workspace $ws2 output $disp2
 
 # bind program to workspace and focus to them on startup:
-# use (?i) to match if you don't have an exact name (i think)
+# use (?i) to match if you don't have an exact name (i think it is case insesnitivity)
 assign [class="kitty"] $ws1
 assign [class="(?i)google-chrome"] $ws2
 assign [class="(?i)firefox"] $ws2
@@ -423,7 +428,8 @@ for_window [class=(?i)jetbrains-studio] focus
 #exec_always --no-startup-id picom -b
 #
 # for custom config:
-#exec_always --no-startup-id picom --config  ~/.config/picom.conf
+exec_always --no-startup-id picom --no-frame-pacing --config  ~/.config/picom.conf
+# exec_always --no-startup-id picom --config  ~/.config/picom.conf
 
 #############################################
 # autostart applications/services on login: #
@@ -557,16 +563,18 @@ set $urgentred		#e53935
 set $white		#ffffff
 set $black		#000000
 set $purple		#e345ff
-set $darkgrey		#383c4a
+# set $darkgrey		#383c4a
+set $darkgrey		#333333
 set $grey		#b0b5bd
 set $mediumgrey		#8b8b8b
 set $yellowbrown	#e1b700
 
 # define colors for windows:
 #class		        	border		bground		text		indicator	child_border
-client.focused		    	$lightblue	$darkblue	$white		$mediumgrey	$mediumgrey
-client.unfocused	    	$darkblue	$darkblue	$grey		$darkgrey	$darkgrey
-client.focused_inactive		$darkblue	$darkblue	$grey		$black		$black
+client.focused		    	$lightgrey $lightgrey $black		$lightgrey	$lightgrey
+client.unfocused	    	$darkgrey $darkgrey $grey		$darkgrey	$darkgrey
+client.focused_inactive $darkgrey $black $grey		$darkgrey	$darkgrey
+# client.focused_inactive		$black $black $grey		$black		$black
 client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 
 ############################################
