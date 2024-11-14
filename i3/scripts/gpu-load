@@ -74,13 +74,15 @@ $gpu_usage eq -1 and die 'Can\'t find GPU information';
 
 # Print full_text, short_text
 # print $full_text;
-printf ":%3.2d%%\n", int($gpu_usage);
+printf "%3.2d%%\n", int($gpu_usage);
 
 # Print color, if needed
 if ($gpu_usage >= $t_crit || $gpu_mem >= $t_crit || $gpu_video >= $t_crit || $gpu_pcie >= $t_crit) {
-    print "#BF616A\n";
+    # print "#BF616A\n";
+    print "#FF0000\n";
 } elsif ($gpu_usage >= $t_warn || $gpu_mem >= $t_warn || $gpu_video >= $t_warn || $gpu_pcie >= $t_warn) {
-    print "#EBCB8B\n";
+    print "#FFFF00\n";
+    # print "#EBCB8B\n";
 }
 
 exit 0;

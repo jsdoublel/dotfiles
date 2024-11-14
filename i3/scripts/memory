@@ -16,7 +16,7 @@
 
 TYPE="${BLOCK_INSTANCE:-mem}"
 
-echo ":$(awk -v type=$TYPE '
+echo "$(awk -v type=$TYPE '
 /^MemTotal:/ {
 	mem_total=$2
 }
@@ -59,11 +59,14 @@ END {
 
 	# color
 	if (pct > 90) {
-		print("#BF616A")
+		print("#FF0000")
+		# print("#BF616A")
 	} else if (pct > 80) {
-		print("#D08770")
+		print("#FFFF00")
+		# print("#D08770")
 	} else if (pct > 70) {
-		print("#EBCB8B")
+		print("#FFFF00")
+		# print("#EBCB8B")
 	}
 }
 ' /proc/meminfo)"
