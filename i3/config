@@ -649,9 +649,11 @@ bar {
 
 ## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
 
-bindsym $mod+d exec --no-startup-id dmenu_run -i -nb '#000000' -nf '#ffffff' -sb '#969696' -sf '#000000' -fn 'GoMono:pixelsize=13'
-bindsym $mod+Shift+d exec --no-startup-id rofi -modi drun -show drun \
-		-config ~/.config/rofi/rofidmenu.rasi
+# bindsym $mod+d exec --no-startup-id dmenu_run -i -nb '#000000' -nf '#ffffff' -sb '#969696' -sf '#000000' -fn 'GoMono:pixelsize=13'
+bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun \
+		-theme ~/.config/rofi/launchers/type-4/style-2
+		# -config ~/.config/rofi/config.rasi
+		# -config ~/.config/rofi/rofidmenu.rasi
 
 #bindsym F9 exec --no-startup-id rofi -modi drun -show drun \
 #		-config ~/.config/rofi/rofidmenu.rasi
