@@ -9,9 +9,9 @@ fi
 # print red on mute
 if [ "$(pactl get-sink-mute @DEFAULT_SINK@)" = "Mute: yes" ]; then
 	echo ""
-	echo '#FF0000'
-	# echo '#BF616A'
+	# echo '#FF0000'
+	echo '#BF616A'
 else
-	echo ""
-	# echo '#00FF00'
+	# echo ""
+	echo '#00FF00'
 fi

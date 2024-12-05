@@ -13,6 +13,8 @@ application/x-extension-shtml=firefox.desktop
 application/xhtml+xml=firefox.desktop
 application/x-extension-xhtml=firefox.desktop
 application/x-extension-xht=firefox.desktop
+text/plain=nvim.desktop
+x-scheme-handler/terminal=kitty.desktop
 
 [Added Associations]
 image/png=feh.desktop;
@@ -27,4 +29,4 @@ application/x-extension-shtml=firefox.desktop;
 application/xhtml+xml=firefox.desktop;
 application/x-extension-xhtml=firefox.desktop;
 application/x-extension-xht=firefox.desktop;
-text/plain=nvim.desktop;xed.desktop;
+text/plain=xed.desktop;nvim.desktop;

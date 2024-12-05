@@ -53,11 +53,11 @@ printf "%3.2d%%\n", int($cpu_usage);
 
 # Print color, if needed
 if ($cpu_usage >= $t_crit) {
-    print "#FF0000\n";
-    # print "#BF616A\n";
+    # print "#FF0000\n";
+    print "#BF616A\n";
 } elsif ($cpu_usage >= $t_warn) {
-    print "#FFFF00\n";
-    # print "#EBCB8B\n";
+    # print "#FFFF00\n";
+    print "#EBCB8B\n";
 }
 
 exit 0;

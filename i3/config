@@ -369,7 +369,7 @@ workspace $ws3 output $disp2
 
 # bind program to workspace and focus to them on startup:
 # use (?i) to match if you don't have an exact name (i think it is case insesnitivity)
-assign [class="kitty"] $ws1
+# assign [class="kitty"] $ws1
 assign [class="(?i)google-chrome"] $ws2
 assign [class="(?i)firefox"] $ws2
 assign [class="discord"] $ws3
@@ -383,11 +383,10 @@ assign [class="(?i)zoom"] $ws6
 # assign [class="TelegramDesktop"] $ws5
 
 # automatic set focus new window if it opens on another workspace than the current:
-for_window [class=kitty] focus
+# for_window [class=kitty] focus
 for_window [class=(?i)google-chrome] focus
 for_window [class=(?i)firefox] focus
 for_window [class=steam] focus
-for_window [class=obsidian] focus
 for_window [class=(?i)zoom] focus
 for_window [class=(?i)minecraft] focus
 for_window [class=(?i)jetbrains-studio] focus
@@ -651,7 +650,8 @@ bar {
 
 # bindsym $mod+d exec --no-startup-id dmenu_run -i -nb '#000000' -nf '#ffffff' -sb '#969696' -sf '#000000' -fn 'GoMono:pixelsize=13'
 bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun \
-		-theme ~/.config/rofi/launchers/type-4/style-2
+		-theme ~/.config/rofi/drunstyle.rasi
+		# -theme ~/.config/rofi/launchers/type-4/style-2.rasi
 		# -config ~/.config/rofi/config.rasi
 		# -config ~/.config/rofi/rofidmenu.rasi
 
