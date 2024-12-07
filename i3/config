@@ -213,7 +213,7 @@ bindsym $mod+c exec --no-startup-id kitty ~/.config/i3/scripts/launch_cc.sh
 bindsym $mod+q kill
 
 # exit-menu
-bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
+bindsym $mod+Shift+e exec --no-startup-id ~/.config/rofi/powermenu.sh
 
 # Lock the system
 # lock with a picture:
@@ -231,7 +231,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+g exec --no-startup-id openrgb -p profile
 
 # reload caps-to-esc
-bindsym $mod+Shift+semicolon exec --no-startup-id /usr/bin/setxkbmap -option "caps:escape_shifted_capslock"
+bindsym $mod+Shift+semicolon exec --no-startup-id /usr/bin/setxkbmap -option caps:escape
 
 # keybinding in fancy rofi (automated):
 # bindsym F1 exec --no-startup-id ~/.config/i3/scripts/keyhint-2
@@ -338,7 +338,6 @@ bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 bindsym Print exec --no-startup-id flameshot screen -r > ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
-
 bindsym $mod+m exec --no-startup-id prismlauncher
 # Power Profiles menu switcher (rofi)
 # bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
@@ -370,6 +369,7 @@ workspace $ws3 output $disp2
 # bind program to workspace and focus to them on startup:
 # use (?i) to match if you don't have an exact name (i think it is case insesnitivity)
 # assign [class="kitty"] $ws1
+# assign [class="kitty" title="bash"] $ws1
 assign [class="(?i)google-chrome"] $ws2
 assign [class="(?i)firefox"] $ws2
 assign [class="discord"] $ws3
@@ -383,7 +383,7 @@ assign [class="(?i)zoom"] $ws6
 # assign [class="TelegramDesktop"] $ws5
 
 # automatic set focus new window if it opens on another workspace than the current:
-# for_window [class=kitty] focus
+for_window [class=kitty] focus
 for_window [class=(?i)google-chrome] focus
 for_window [class=(?i)firefox] focus
 for_window [class=steam] focus
@@ -535,6 +535,7 @@ for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
 for_window [class="Xsane" instance="xsane"] floating enable
 for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
 for_window [class="qt5ct" instance="qt5ct"] floating enable
+for_window [class="qt6ct" instance="qt6ct"] floating enable
 for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
 for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enable
 for_window [class="Pamac-manager"] floating enable
