@@ -368,7 +368,7 @@ workspace $ws3 output $disp2
 
 # bind program to workspace and focus to them on startup:
 # use (?i) to match if you don't have an exact name (i think it is case insesnitivity)
-# assign [class="kitty"] $ws1
+assign [class="kitty"] $ws1
 # assign [class="kitty" title="bash"] $ws1
 assign [class="(?i)google-chrome"] $ws2
 assign [class="(?i)firefox"] $ws2
@@ -376,7 +376,6 @@ assign [class="discord"] $ws3
 assign [class="steam"] $ws5
 assign [class="(?i)jetbrains-studio"] $ws5
 assign [class="(?i)Minecraft"] $ws4
-assign [class="obsidian"] $ws5
 assign [class="(?i)zoom"] $ws6
 # assign [class="Thunar"] $ws3
 # assign [class="thunderbird"] $ws4
