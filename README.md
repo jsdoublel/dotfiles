@@ -1,0 +1,7 @@
+# dotfiles
+
+Dotfiles for my [i3](https://i3wm.org/) [EndeavorOS](https://endeavouros.com/) desktop. Feel free to use whatever. Clone the repo with `--recursive` in order to obtain all the submodules.
+
+The directory layout is desgined with [GNU Stow](https://www.gnu.org/software/stow/) in mind. For instance, if you cloned the repo into your home folder, running `stow -t ~ -d ~/dotfiles i3` would install the i3 configs.
+
+![desktop screenshot](screenshot.png)
