@@ -1,8 +1,8 @@
 [submodule "i3/.config/i3"]
-	path = i3/.config/i3
+	path = i3/dot-config/i3
 	url = git@github.com:jsdoublel/i3.git
 	branch = main
 [submodule "nvim/.config/nvim"]
-	path = nvim/.config/nvim
+	path = nvim/dot-config/nvim
 	url = git@github.com:jsdoublel/nvim.git
 	branch = main

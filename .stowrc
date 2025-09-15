@@ -1,0 +1,4 @@
+--dotfiles
+--dir=~/dotfiles
+--target=~
+--ignore='\.secret$'
