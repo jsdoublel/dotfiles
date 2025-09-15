@@ -1,0 +1,5 @@
+.gitsecret/keys/random_seed
+!*.secret
+shell/.gitconfig
+shell/.secrets
+shell/.ssh/allowed_signers

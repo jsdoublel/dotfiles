@@ -1,0 +1,113 @@
+# ~/.bashrc
+
+# If not running interactively, don't do anything
+# [[ $- != *i* ]] && return
+[[ "$(whoami)" = "root" ]] && return
+[[ -z "$FUNCNEST" ]] && export FUNCNEST=100          # limits recursive functions, see 'man bash'
+
+####################### PATH ##########################
+export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.go/bin"
+export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
+
+####################### VARIABLES #####################
+export XDG_CONFIG_DIR="$HOME/.config/"
+export EDITOR="nvim"
+export BROWSER="firefox"
+export TERMINAL="usr/bin/kitty"
+export ANDROID_HOME="$HOME/.android_sdk"
+export QT_QPA_PLATFORMTHEME=qt6ct
+export I3_SCRIPTS="$HOME/.config/i3/scripts/"
+export R_LIBS_USER="$HOME/.R/library/"
+
+###################### BINDINGS ######################
+set -o vi # enable vim keybindings on terminal
+## Use the up and down arrow keys for finding a command in history
+## (you can write some initial letters of the command first).
+# bind '"\e[A":history-search-backward'
+# bind '"\e[B":history-search-forward'
+bind -x '"\C-t":"ltmux"'
+bind -x '"\C-y":"ltmux -v"'
+
+####################### FUNCTIONS ##########################
+
+_open_files_for_editing() {
+    # Open any given document file(s) for editing (or just viewing).
+    # Note1:
+    #    - Do not use for executable files!
+    # Note2:
+    #    - Uses 'mime' bindings, so you may need to use
+    #      e.g. a file manager to make proper file bindings.
+
+    if [ -x /usr/bin/exo-open ] ; then
+        echo "exo-open $@" >&2
+        setsid exo-open "$@" >& /dev/null
+        return
+    fi
+    if [ -x /usr/bin/xdg-open ] ; then
+        for file in "$@" ; do
+            echo "xdg-open $file" >&2
+            setsid xdg-open "$file" >& /dev/null
+        done
+        return
+    fi
+
+    echo "$FUNCNAME: package 'xdg-utils' or 'exo' is required." >&2
+}
+
+_activate_venvs() {
+	# Activates any virtual environments that can be found
+	[[ -f '.venv/bin/activate' ]] && source .venv/bin/activate
+	[[ -f '/opt/miniconda3/etc/profile.d/conda.sh' ]] && source /opt/miniconda3/etc/profile.d/conda.sh
+	[[ -f '.conda_env' ]] && conda activate "$(cat .conda_env)"
+	[[ -f '.env' ]] && source .env
+}
+
+################ ALIASES ##################
+
+alias ef='_open_files_for_editing'     # 'ef' opens given file(s) for editing
+# alias pacdiff=eos-pacdiff
+# Kitty terminal specific aliases
+if [ "$TERM" = "xterm-kitty" ]; then 
+	alias ssh="kitten ssh"
+fi
+alias icat="kitten icat"
+alias w3m="w3m -x inline_img_protocol=4"
+
+alias sudo='sudo '
+alias exec='exec '
+alias xargs='xargs '
+alias ls="lsd"
+alias la="ls -a"
+alias ll="ls -lah"
+alias lr="ls -lahtr"
+alias lt="ls --tree"
+alias cat="bat"
+export BAT_THEME="base16"
+alias cl="clear"
+alias res="cd; clear; neofetch"
+alias vim="nvim"
+alias emacs="nvim"
+alias update="eos-update --yay --nvidia"
+alias logout="i3-msg exit"
+alias grep="grep --color=auto"
+alias neofetch="fastfetch"
+alias lvim="ltmux -v"
+alias phylonet="java -jar /usr/share/phylonet/PhyloNet.jar"
+
+###################### SECRETES ###############################
+[[ -f "$HOME/.secrets" ]] || source "$HOME/.secrets"
+
+######################### FZF #################################
+FZF_CTRL_T_COMMAND= eval "$(fzf --bash)"
+export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git"
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --exclude .git"
+
+################# STARTUP PROGRAMS ############################
+eval "$(starship init bash)"
+[[ -z "$TMUX" ]] && fastfetch 
+[[ -z "$TMUX" ]] || _activate_venvs
+true # get's rid of red prompt from tmux check
+
