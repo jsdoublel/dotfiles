@@ -1,0 +1,20 @@
+[user]
+	email = jamessw156@gmail.com
+	name = James Willson
+	signingkey = /home/jsdoublel/.ssh/id_ed25519.pub
+[init]
+	defaultBranch = main
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[rerere]
+	enabled = true
+[alias]
+	pushf = push --force-with-lease
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[pull]
+	rebase = true
+[gpg "ssh"]
+	allowedSignersFile = /home/jsdoublel/.ssh/allowed_signers
