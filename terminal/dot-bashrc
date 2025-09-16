@@ -104,6 +104,7 @@ FZF_CTRL_T_COMMAND= eval "$(fzf --bash)"
 export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git"
 # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --exclude .git"
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#cccccc,fg+:#fffcf0,bg:-1,bg+:#080808 --color=hl:#708090,hl+:#789978,info:#444444,marker:#d70000 --color=prompt:#cccccc,spinner:#deeeed,pointer:#555555 --color=border:#262626,label:#aeaeae,query:#dddddd'
 
 ################# STARTUP PROGRAMS ############################
 eval "$(starship init bash)"
