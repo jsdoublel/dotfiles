@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+# James Willson 2025
+
+SEARCH_PATHS=("$HOME")
+
+FILES_PREVIEW="bat --color=always --style=plain {}"
+if command -v lsd >/dev/null 2>&1; then
+  FOLDERS_PREVIEW="lsd --tree --depth=3 --color=always --icon=always {}"
+else
+  FOLDERS_PREVIEW="ls --color=always {}"
+fi
+
+fzf_command() {
+	fzf --style 'full:sharp' --border sharp --border-label "$1" --preview="$2"
+}
+
+ltmux() {
+  [[ -z $1 ]] && d=$(fd . "${SEARCH_PATHS[@]}" -t d | \
+	  fzf_command ' TMUX ' "$FOLDERS_PREVIEW") || d="$1"
+  [[ -z $d ]] && exit 1
+  n=$(basename "$d" | sed 's/\./\_/g' | head -c 8)
+  if ! tmux has-session -t "$n" 2> /dev/null; then
+    tmux new-session -s "$n" -d -c "$d"
+    tmux send-keys -t "$n:0" C-z 'exec nvim .' Enter
+    tmux new-window -t "$n:1" -c "$d"
+  fi
+  if [[ -z $TMUX ]]; then 
+    tmux attach-session -t "$n:0" 
+  else
+    tmux switch-client -t "$n:0"
+  fi
+}
+
+lvim() {
+  f=$(fd . "${SEARCH_PATHS[@]}" -t f | fzf_command ' NVIM ' "$FILES_PREVIEW")
+  [[ -z $f ]] && exit 1
+  nvim "$f"
+}
+
+ldir() {
+  f=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' THUNAR ' "$FOLDERS_PREVIEW")
+  [[ -z $f ]] && exit 1
+  setsid xdg-open "$f" >/dev/null 2>&1 
+}
+
+_usage() {
+  echo "Usage: ltmux [options]"
+  echo ""
+  echo "Options:"
+  echo "  -d, --directory DIR   Specify the directory"
+  echo "  -f, --file-manager    Launches file-manager (instead of tmux)"
+  echo "  -v, --vim             Launches nvim (instead of tmux)"
+  echo "  -h, --help            Display this help message"
+}
+
+dir=""
+v=false
+f=false
+
+ARGS=d:vfh
+LARGS=directory:,vim,file-manager,help
+parse=$(getopt --options $ARGS --longoptions $LARGS --name "ltmux" -- "$@")
+if [[ $? != 0 ]]; then
+  exit 1
+fi
+eval set -- "$parse"
+
+while true; do
+  case "$1" in
+  -d | --directory)
+    dir="$2"
+    shift 2
+    ;;
+  -v | --vim)
+    v=true
+    shift 
+    ;;
+  -f | --file-manager)
+	f=true
+	shift
+	;;
+  -h | --help)
+    _usage
+    exit 0
+    ;;
+  --)
+    shift
+    break
+    ;;
+  *)
+    echo "error: $1"
+    exit 1
+    ;;
+  esac
+done
+
+if [ ! -z "$@" ]; then
+  echo "Invalid option(s) \"$@\""
+  _usage
+  exit 1
+fi
+
+if $v; then
+	lvim
+elif $f; then
+	ldir
+else 
+	ltmux "$dir"
+fi
+
