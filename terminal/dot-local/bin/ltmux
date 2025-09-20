@@ -40,7 +40,7 @@ lvim() {
 ldir() {
   f=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' THUNAR ' "$FOLDERS_PREVIEW")
   [[ -z $f ]] && exit 1
-  setsid xdg-open "$f" >/dev/null 2>&1 
+  setsid exo-open "$f" >/dev/null 2>&1 
 }
 
 _usage() {

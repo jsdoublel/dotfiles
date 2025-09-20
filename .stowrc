@@ -1,5 +1,5 @@
 --dotfiles
---dir=~/dotfiles
+--dir=~/Configs/dotfiles
 --target=~
 --ignore='\.secret$'
 --verbose=1
