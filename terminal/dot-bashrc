@@ -97,7 +97,7 @@ alias lvim="ltmux -v"
 alias phylonet="java -jar /usr/share/phylonet/PhyloNet.jar"
 
 ###################### SECRETES ###############################
-[[ -f "$HOME/.secrets" ]] || source "$HOME/.secrets"
+[[ -f "$HOME/.secrets" ]] && source "$HOME/.secrets"
 
 ######################### FZF #################################
 FZF_CTRL_T_COMMAND= eval "$(fzf --bash)"

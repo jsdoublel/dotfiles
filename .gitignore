@@ -1,6 +1,6 @@
 .gitsecret/keys/random_seed
-shell/dot-secrets
-shell/dot-gitconfig
-shell/dot-ssh/allowed_signers
+dot-secrets
+dot-gitconfig
+allowed_signers
 !*.secret
 *.pdf
