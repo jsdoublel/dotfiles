@@ -13,6 +13,7 @@ export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 
 ####################### VARIABLES #####################
 export XDG_CONFIG_DIR="$HOME/.config/"
+export XDG_DATA_HOME="$HOME/.local/share/"
 export EDITOR="nvim"
 export BROWSER="helium-browser"
 export TERMINAL="usr/bin/kitty"
@@ -109,6 +110,7 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#cccccc,fg+:#fffcf0,bg:-1,
 ################# STARTUP PROGRAMS ############################
 eval "$(starship init bash)"
 [[ -z "$TMUX" ]] && fastfetch 
-[[ -z "$TMUX" ]] || _activate_venvs
+[[ ! -z "$TMUX" ]] && _activate_venvs
+[[ $- == *i* ]] && shopt -s globstar dotglob
 true # get's rid of red prompt from tmux check
 

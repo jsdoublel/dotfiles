@@ -18,7 +18,7 @@ ltmux() {
   [[ -z $1 ]] && d=$(fd . "${SEARCH_PATHS[@]}" -t d | \
 	  fzf_command ' TMUX ' "$FOLDERS_PREVIEW") || d="$1"
   [[ -z $d ]] && exit 1
-  n=$(basename "$d" | sed 's/\./\_/g' | head -c 8)
+  n=$(basename "$d" | sed 's/\./\_/g')
   if ! tmux has-session -t "$n" 2> /dev/null; then
     tmux new-session -s "$n" -d -c "$d"
     tmux send-keys -t "$n:0" C-z 'exec nvim .' Enter
