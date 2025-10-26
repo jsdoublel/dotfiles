@@ -25,7 +25,7 @@ application/x-extension-ics=userapp-Thunderbird-8VGG72.desktop
 x-scheme-handler/webcals=userapp-Thunderbird-8VGG72.desktop
 
 [Added Associations]
-image/png=blockbench.desktop;feh.desktop;gimp.desktop;
+image/png=feh.desktop;gimp.desktop;
 application/zip=xarchiver.desktop;
 application/json=org.x.editor.desktop;
 application/gzip=org.x.editor.desktop;
