@@ -12,14 +12,13 @@ export PATH="$PATH:$HOME/.go/bin"
 export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 
 ####################### VARIABLES #####################
-export XDG_CONFIG_DIR="$HOME/.config/"
+export XDG_CONFIG_HOME="$HOME/.config/"
 export XDG_DATA_HOME="$HOME/.local/share/"
 export EDITOR="nvim"
 export BROWSER="helium-browser"
 export TERMINAL="usr/bin/kitty"
 export ANDROID_HOME="$HOME/.android_sdk"
 export QT_QPA_PLATFORMTHEME=qt6ct
-export I3_SCRIPTS="$HOME/.config/i3/scripts/"
 export R_LIBS_USER="$HOME/.R/library/"
 
 ###################### BINDINGS ######################
