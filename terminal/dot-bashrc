@@ -14,12 +14,14 @@ export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 ####################### VARIABLES #####################
 export XDG_CONFIG_HOME="$HOME/.config/"
 export XDG_DATA_HOME="$HOME/.local/share/"
+export XDG_MUSIC_DIR="$HOME/Music"
 export EDITOR="nvim"
-export BROWSER="helium-browser"
+export BROWSER="helium"
 export TERMINAL="usr/bin/kitty"
 export ANDROID_HOME="$HOME/.android_sdk"
 export QT_QPA_PLATFORMTHEME=qt6ct
 export R_LIBS_USER="$HOME/.R/library/"
+export MPD_HOST="/run/user/1000/mpd/socket"
 
 ###################### BINDINGS ######################
 set -o vi # enable vim keybindings on terminal
@@ -27,7 +29,7 @@ set -o vi # enable vim keybindings on terminal
 ## (you can write some initial letters of the command first).
 # bind '"\e[A":history-search-backward'
 # bind '"\e[B":history-search-forward'
-bind -x '"\C-t":"ltmux"'
+bind -x '"\C-g":"ltmux"'
 bind -x '"\C-y":"ltmux -v"'
 
 ####################### FUNCTIONS ##########################
@@ -100,9 +102,9 @@ alias phylonet="java -jar /usr/share/phylonet/PhyloNet.jar"
 [[ -f "$HOME/.secrets" ]] && source "$HOME/.secrets"
 
 ######################### FZF #################################
-FZF_CTRL_T_COMMAND= eval "$(fzf --bash)"
+eval "$(fzf --bash)"
 export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git"
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --exclude .git"
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#cccccc,fg+:#fffcf0,bg:-1,bg+:#080808 --color=hl:#708090,hl+:#789978,info:#444444,marker:#d70000 --color=prompt:#cccccc,spinner:#deeeed,pointer:#555555 --color=border:#262626,label:#aeaeae,query:#dddddd'
 
