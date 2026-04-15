@@ -1,3 +1,8 @@
 Host ccl
 	Hostname cc-login.campuscluster.illinois.edu
 	User jamessw3
+
+Host aur
+	Hostname aur.archlinux.org
+	IdentityFile ~/.ssh/aur
+	User aur
