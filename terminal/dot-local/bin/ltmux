@@ -11,7 +11,7 @@ else
 fi
 
 fzf_command() {
-	fzf --style 'full:sharp' --border sharp --border-label "$1" --preview="$2"
+	fzf --style 'full:rounded' --border rounded --border-label "$1" --preview="$2"
 }
 
 ltmux() {
