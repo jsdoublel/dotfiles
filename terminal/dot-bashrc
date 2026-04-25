@@ -29,8 +29,8 @@ set -o vi # enable vim keybindings on terminal
 ## (you can write some initial letters of the command first).
 # bind '"\e[A":history-search-backward'
 # bind '"\e[B":history-search-forward'
-bind -x '"\C-g":"ltmux"'
-bind -x '"\C-y":"ltmux -v"'
+bind -x '"\C-g":"lkitty"'
+bind -x '"\C-y":"lkitty -v"'
 
 ####################### FUNCTIONS ##########################
 
@@ -75,6 +75,7 @@ if [ "$TERM" = "xterm-kitty" ]; then
 	alias ssh="kitten ssh"
 fi
 alias icat="kitten icat"
+alias clip="kitten clipboard"
 alias w3m="w3m -x inline_img_protocol=4"
 
 alias sudo='sudo '
@@ -95,7 +96,7 @@ alias update="eos-update --yay --nvidia"
 alias logout="i3-msg exit"
 alias grep="grep --color=auto"
 alias neofetch="fastfetch"
-alias lvim="ltmux -v"
+alias lvim="lkitty -v"
 alias phylonet="java -jar /usr/share/phylonet/PhyloNet.jar"
 
 ###################### SECRETES ###############################
@@ -110,8 +111,8 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#cccccc,fg+:#fffcf0,bg:-1,
 
 ################# STARTUP PROGRAMS ############################
 eval "$(starship init bash)"
-[[ -z "$TMUX" ]] && fastfetch 
-[[ ! -z "$TMUX" ]] && _activate_venvs
+[[ $- == *i* ]] && fastfetch 
+[[ $- == *i* ]] && _activate_venvs
 [[ $- == *i* ]] && shopt -s globstar dotglob
 true # get's rid of red prompt from tmux check
 
