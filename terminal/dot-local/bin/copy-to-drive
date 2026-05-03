@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -e
+
+DRIVE_UUID="0DC0DDEA36E8D6DD"
+MOUNT_DIR="/mnt/mount_${DRIVE_UUID}"
+
+if ! mountpoint -q "$MOUNT_DIR" > /dev/null; then	# check if drive is mounted 
+	if ! blkid -U "$DRIVE_UUID"; then	# check if drive exists
+		echo  "Error: USB drive with UUID $DRIVE_UUID not found. Is it plugged in?" 
+		exit 1
+	fi
+	sudo mkdir -p "$MOUNT_DIR"
+	sudo mount -U "$DRIVE_UUID" "$MOUNT_DIR"
+fi
+
+while true; do 
+	to_copy=$(fzf) || true
+	[[ -z "$to_copy" ]] && break
+	read -rp "Do you want to copy file: $to_copy [Y/n] " ANSWER
+	[[ "$ANSWER" =~ ^[nN]$ ]] || rsync -ah --progress "$to_copy" "$MOUNT_DIR"
+	read -rp "Do you want to copy another file [y/N] " ANSWER
+	[[ "$ANSWER" =~ ^[yY]$ ]] || break
+done
+
+read -rp "Unmount drive? [y/N] " ANSWER
+if [[ "$ANSWER" =~ ^[yY]$ ]]; then 
+	echo "Unmounting drive..."
+	sync &
+	sync_pid=$!
+	while kill -0 $sync_pid 2> /dev/null; do 
+		echo -ne "$(grep -e "^Dirty:" /proc/meminfo)\t\t\r"
+		sleep 2
+	done
+	sudo umount "$MOUNT_DIR"
+	sudo rmdir "$MOUNT_DIR"
+	printf "\nDone!\n"
+fi
+
