@@ -3,7 +3,11 @@
 
 SEARCH_PATHS=("$HOME")
 
-FILES_PREVIEW="bat --color=always --style=plain {}"
+if command -v bat > /dev/null 2>&1; then 
+	FILES_PREVIEW="bat --color=always --style=plain {}"
+else
+	FILES_PREVIEW="cat {}"
+fi
 if command -v lsd >/dev/null 2>&1; then
 	FOLDERS_PREVIEW="lsd --tree --depth=3 --color=always --icon=always {}"
 else
@@ -15,6 +19,7 @@ fzf_command() {
 }
 
 lkitty() {
+	local d
 	[[ -z $1 ]] && d=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' KITTY ' "$FOLDERS_PREVIEW") || d="$1"
 	[[ -z $d ]] && exit 1
 	if [[ $(kitty @ ls | jq '.[] | select(.is_focused) | .tabs | length') -eq 1 ]]; then 
@@ -24,7 +29,7 @@ lkitty() {
 		cd "$d" || return 2
 		nvim .
 	else
-		nvim_id=$(kitty @ launch --type="os-window" --cwd="$d" nvim .)
+		local nvim_id=$(kitty @ launch --type="os-window" --cwd="$d" nvim .)
 		kitty @ set-tab-title --match "id:$nvim_id" "nvim"
 		kitty @ launch --type=tab --cwd="$d" bash > /dev/null
 		kitty @ focus-window --match "id:$nvim_id"
@@ -32,14 +37,14 @@ lkitty() {
 }
 
 lvim() {
-	f=$(fd . "${SEARCH_PATHS[@]}" -t f | fzf_command ' NVIM ' "$FILES_PREVIEW")
+	local f=$(fd . "${SEARCH_PATHS[@]}" -t f | fzf_command ' NVIM ' "$FILES_PREVIEW")
 	[[ -z $f ]] && exit 1
 	kitty @ set-tab-title --match "id:$KITTY_WINDOW_ID" "$(basename "$f")"
 	nvim "$f"
 }
 
 ldir() {
-	f=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' THUNAR ' "$FOLDERS_PREVIEW")
+	local f=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' THUNAR ' "$FOLDERS_PREVIEW")
 	[[ -z $f ]] && exit 1
 	setsid exo-open "$f" >/dev/null 2>&1 
 }
