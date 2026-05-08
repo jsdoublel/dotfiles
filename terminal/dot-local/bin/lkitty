@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# James Willson 2025
+# James Willson 2026
 
 SEARCH_PATHS=("$HOME")
 
@@ -18,39 +18,44 @@ fzf_command() {
 	fzf --style 'full:rounded' --border rounded --border-label "$1" --preview="$2"
 }
 
+# Asks for a directory and launches kitty there (two tabs, one for editor:
+# nvim, and one for shell). Tries to reuse current terminal window if current
+# window only has 1 tab; otherwise, launches a new window
 lkitty() {
-	local d
-	[[ -z $1 ]] && d=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' KITTY ' "$FOLDERS_PREVIEW") || d="$1"
-	[[ -z $d ]] && exit 1
-	if [[ $(kitty @ ls | jq '.[] | select(.is_focused) | .tabs | length') -eq 1 ]]; then 
-		kitty @ set-tab-title --match "id:$KITTY_WINDOW_ID" "nvim"
-		kitty @ launch --type=tab --cwd="$d" bash > /dev/null
-		kitty @ focus-window --match "id:$KITTY_WINDOW_ID"
-		cd "$d" || return 2
-		nvim .
-	else
-		local nvim_id
-		nvim_id=$(kitty @ launch --type="os-window" --cwd="$d" nvim .)
-		kitty @ set-tab-title --match "id:$nvim_id" "nvim"
-		kitty @ launch --type=tab --cwd="$d" bash > /dev/null
-		kitty @ focus-window --match "id:$nvim_id"
-	fi
+	local dir # project directory
+	local ltype # type of kitty launch
+	local nvim_id # id of nvim kitty tab
+	[[ -z $1 ]] && dir=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' KITTY ' "$FOLDERS_PREVIEW") || dir="$1"
+	[[ -z $dir ]] && exit 1
+	[[ $(kitty @ ls | jq ".[] | select(.is_focused) | .tabs | length") == "1" ]] && ltype="overlay" || ltype="os-window"
+	nvim_id=$(kitty @ launch --type="$ltype" --cwd="$dir" nvim .)
+	kitty @ set-tab-title --match "id:$nvim_id" "nvim"
+	kitty @ launch --match "id:$nvim_id" --type=tab --cwd="$dir" bash > /dev/null
+	kitty @ focus-window --match "id:$nvim_id"
 }
 
+# Asks for file and launches editor (nvim) in new tab.
 lvim() {
-	local f
-	f=$(fd . "${SEARCH_PATHS[@]}" -t f | fzf_command ' NVIM ' "$FILES_PREVIEW")
-	[[ -z $f ]] && exit 1
-	kitty @ set-tab-title --match "id:$KITTY_WINDOW_ID" "$(basename "$f")"
-	nvim "$f"
+	local file # file to open
+	file=$(fd . "${SEARCH_PATHS[@]}" -t f | fzf_command ' NVIM ' "$FILES_PREVIEW")
+	[[ -z $file ]] && exit 1
+	kitty @ set-tab-title --match "id:$KITTY_WINDOW_ID" "$(basename "$file")"
+	nvim "$file"
 }
 
+# Asks for directory and launches file browser (with exo-open). I tried the
+# more generic xdg-open, but I couldn't get it to work, as it would leave a
+# blank terminal window.
 ldir() {
-	local f
-	f=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' THUNAR ' "$FOLDERS_PREVIEW")
-	[[ -z $f ]] && exit 1
-	setsid exo-open "$f" >/dev/null 2>&1 
+	local dir # directory to open 
+	dir=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' THUNAR ' "$FOLDERS_PREVIEW")
+	[[ -z $dir ]] && exit 1
+	setsid exo-open "$dir" >/dev/null 2>&1 
 }
+
+##################
+# Parse Arguments
+##################
 
 _usage() {
 	echo "Usage: lkitty [options]"

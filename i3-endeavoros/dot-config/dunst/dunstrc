@@ -298,7 +298,7 @@
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
     # background = "#363636"
-    background = "#000000"
+    background = "#191919"
     foreground = "#DDDDDD"
 	highlight = "#AAAAAA"
     timeout = 5
@@ -307,7 +307,7 @@
 
 [urgency_normal]
     # background = "#363636"
-    background = "#000000"
+    background = "#191919"
     foreground = "#DDDDDD"
 	highlight = "#AAAAAA"
     timeout = 5
@@ -316,7 +316,7 @@
 
 [urgency_critical]
     # background = "#363636"
-    background = "#000000"
+    background = "#191919"
     foreground = "#DDDDDD"
 	highlight = "#AAAAAA"
     # frame_color = "#ff7f7f"
