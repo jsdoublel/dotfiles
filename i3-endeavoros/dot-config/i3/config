@@ -384,7 +384,10 @@ exec_always --no-startup-id xrandr --output DP-2 --primary
 exec_always --no-startup-id xrandr --output DP-4 --right-of DP-2
 
 # set wallpaper
-exec_always --no-startup-id sleep 1 && feh --bg-fill $config/i3/isle_of_the_dead.jpg
+exec_always --no-startup-id sleep 1 && feh --bg-fill $config/i3/eclipse.jpg
+# exec_always --no-startup-id sleep 1 && feh --bg-fill $config/i3/artemis-ii.jpg
+# exec_always --no-startup-id sleep 1 && feh --bg-fill $config/i3/moon_window.jpg
+# exec_always --no-startup-id sleep 1 && feh --bg-fill $config/i3/isle_of_the_dead.jpg
 
 # set powersavings for display:
 exec --no-startup-id xset s 900 dpms 600 600 600
@@ -403,7 +406,7 @@ exec_always --no-startup-id autotiling
 exec --no-startup-id openrgb -p profile
 # exec --no-startup-id protonvpn connect
 exec --no-startup-id sleep 2 && discord
-exec --no-startup-id sleep 4 && slack
+# exec --no-startup-id sleep 4 && slack
 # exec --no-startup-id sleep 5 && /usr/bin/thunderbird
 
 ###############

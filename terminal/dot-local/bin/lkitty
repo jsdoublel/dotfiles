@@ -29,7 +29,8 @@ lkitty() {
 		cd "$d" || return 2
 		nvim .
 	else
-		local nvim_id=$(kitty @ launch --type="os-window" --cwd="$d" nvim .)
+		local nvim_id
+		nvim_id=$(kitty @ launch --type="os-window" --cwd="$d" nvim .)
 		kitty @ set-tab-title --match "id:$nvim_id" "nvim"
 		kitty @ launch --type=tab --cwd="$d" bash > /dev/null
 		kitty @ focus-window --match "id:$nvim_id"
@@ -37,14 +38,16 @@ lkitty() {
 }
 
 lvim() {
-	local f=$(fd . "${SEARCH_PATHS[@]}" -t f | fzf_command ' NVIM ' "$FILES_PREVIEW")
+	local f
+	f=$(fd . "${SEARCH_PATHS[@]}" -t f | fzf_command ' NVIM ' "$FILES_PREVIEW")
 	[[ -z $f ]] && exit 1
 	kitty @ set-tab-title --match "id:$KITTY_WINDOW_ID" "$(basename "$f")"
 	nvim "$f"
 }
 
 ldir() {
-	local f=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' THUNAR ' "$FOLDERS_PREVIEW")
+	local f
+	f=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' THUNAR ' "$FOLDERS_PREVIEW")
 	[[ -z $f ]] && exit 1
 	setsid exo-open "$f" >/dev/null 2>&1 
 }

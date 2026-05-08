@@ -3,10 +3,10 @@
 set -e
 
 DRIVE_UUID="0DC0DDEA36E8D6DD"
-MOUNT_DIR="/mnt/mount_${DRIVE_UUID}"
+MOUNT_DIR="/mnt/mount_$DRIVE_UUID"
 
 if ! mountpoint -q "$MOUNT_DIR" > /dev/null; then	# check if drive is mounted 
-	if ! blkid -U "$DRIVE_UUID"; then	# check if drive exists
+	if ! blkid -U "$DRIVE_UUID" > /dev/null; then	# check if drive exists
 		echo  "Error: USB drive with UUID $DRIVE_UUID not found. Is it plugged in?" 
 		exit 1
 	fi
@@ -17,9 +17,9 @@ fi
 while true; do 
 	to_copy=$(fzf) || true
 	[[ -z "$to_copy" ]] && break
-	read -rp "Do you want to copy file: $to_copy [Y/n] " ANSWER
+	read -rp "Do you want to copy file: $(basename "$to_copy")? [Y/n] " ANSWER
 	[[ "$ANSWER" =~ ^[nN]$ ]] || rsync -ah --progress "$to_copy" "$MOUNT_DIR"
-	read -rp "Do you want to copy another file [y/N] " ANSWER
+	read -rp "Do you want to copy another file? [y/N] " ANSWER
 	[[ "$ANSWER" =~ ^[yY]$ ]] || break
 done
 

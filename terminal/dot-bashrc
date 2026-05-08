@@ -81,7 +81,7 @@ alias w3m="w3m -x inline_img_protocol=4"
 alias sudo='sudo '
 alias exec='exec '
 alias xargs='xargs '
-alias ls="lsd"
+alias ls="lsd --hyperlink=auto"
 alias la="ls -a"
 alias ll="ls -lah"
 alias lr="ls -lahtr"
