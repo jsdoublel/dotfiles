@@ -2,38 +2,107 @@
 
 set -e
 
-DRIVE_UUID="0DC0DDEA36E8D6DD"
-MOUNT_DIR="/mnt/mount_$DRIVE_UUID"
+# rsync command for copying files to drive.
+# Uses global $MOUNT_DIR variable.
+rsync_command() {
+	rsync -ah --progress "$@" "$MOUNT_DIR"
+}
 
-if ! mountpoint -q "$MOUNT_DIR" > /dev/null; then	# check if drive is mounted 
-	if ! blkid -U "$DRIVE_UUID" > /dev/null; then	# check if drive exists
-		echo  "Error: USB drive with UUID $DRIVE_UUID not found. Is it plugged in?" 
-		exit 1
+# Mounts drive using global $DRIVE_UUID and $MOUNT_DIR variables
+mount_drive() {
+	if ! mountpoint -q "$MOUNT_DIR" > /dev/null; then	# check if drive is mounted 
+		if ! blkid -U "$DRIVE_UUID" > /dev/null; then	# check if drive exists
+			echo  "Error: USB drive with UUID $DRIVE_UUID not found. Is it plugged in?" 
+			return 1
+		fi
+		sudo mkdir -p "$MOUNT_DIR"
+		sudo mount -U "$DRIVE_UUID" "$MOUNT_DIR"
 	fi
-	sudo mkdir -p "$MOUNT_DIR"
-	sudo mount -U "$DRIVE_UUID" "$MOUNT_DIR"
-fi
+}
 
-while true; do 
-	to_copy=$(fzf) || true
-	[[ -z "$to_copy" ]] && break
-	read -rp "Do you want to copy file: $(basename "$to_copy")? [Y/n] " ANSWER
-	[[ "$ANSWER" =~ ^[nN]$ ]] || rsync -ah --progress "$to_copy" "$MOUNT_DIR"
-	read -rp "Do you want to copy another file? [y/N] " ANSWER
-	[[ "$ANSWER" =~ ^[yY]$ ]] || break
+# Interactively allows user to select files to copy with fzf.
+interactive_copy_files() {
+	local to_copy
+	local answer
+	while true; do 
+		to_copy=$(fd . "$HOME" | fzf) || true # true to handle "set -e" when canceling fzf
+		[[ -z "$to_copy" ]] && break
+		read -rp "Do you want to copy file: $(basename "$to_copy")? [Y/n] " answer
+		[[ "$answer" =~ ^[nN]$ ]] || rsync_command "$to_copy"
+		read -rp "Do you want to copy another file? [y/N] " answer
+		[[ "$answer" =~ ^[yY]$ ]] || break
+	done
+}
+
+# Unmounts drive mounted at $MOUNT_DIR. Asks user if $INTERACTIVE == true.
+unmount_drive() {
+	local answer
+	$INTERACTIVE && read -rp "Unmount drive? [y/N] " answer
+	if [[ "$answer" =~ ^[yY]$ ]] || ! $INTERACTIVE; then 
+		echo "Unmounting drive..."
+		sync &
+		local sync_pid=$!
+		while kill -0 $sync_pid 2> /dev/null; do 
+			echo -ne "$(grep -e "^Dirty:" /proc/meminfo)\t\t\r"
+			sleep 2
+		done
+		if sudo umount "$MOUNT_DIR"; then
+			sudo rmdir "$MOUNT_DIR"
+			printf "\nDone!\n"
+		else
+			echo "Error: Failed to unmount drive."
+		fi
+	fi
+}
+
+_usage() {
+	echo "Usage: $(basename "$0") [-ih] <-u UUID> [files]"
+	echo ""
+	echo "Options:"
+	echo "  -i	Interactively ask for files"
+	echo "  -u	UUID  of drive to copy to"
+	echo "  -h	Display this help message"
+}
+
+HELP=false # display help
+INTERACTIVE=false # interactive
+
+# read in flags
+while getopts ":hiu:" flag; do
+	case "${flag}" in
+		h) HELP=true ;;
+		i) INTERACTIVE=true ;;
+		u) DRIVE_UUID="$OPTARG" ;;
+		\?) echo "Error: Unknown flag -$OPTARG"; _usage; exit 1 ;;
+		:) echo "Error: -$OPTARG requires an argument"; _usage; exit 1 ;;
+	esac
 done
 
-read -rp "Unmount drive? [y/N] " ANSWER
-if [[ "$ANSWER" =~ ^[yY]$ ]]; then 
-	echo "Unmounting drive..."
-	sync &
-	sync_pid=$!
-	while kill -0 $sync_pid 2> /dev/null; do 
-		echo -ne "$(grep -e "^Dirty:" /proc/meminfo)\t\t\r"
-		sleep 2
-	done
-	sudo umount "$MOUNT_DIR"
-	sudo rmdir "$MOUNT_DIR"
-	printf "\nDone!\n"
+if $HELP; then # print help and exit
+	_usage 
+	exit 0
 fi
+
+if [[ -z $DRIVE_UUID ]]; then
+	echo "Error: Drive UUID is required."
+	exit 1
+fi
+MOUNT_DIR="/mnt/mnt$DRIVE_UUID"
+
+# read positional arguments
+FILES=()
+shift $((OPTIND -1)) # shift pass positional flags
+for arg in "$@"; do
+	[[ -e "$arg" ]] && FILES+=("$arg") || echo "File does not exist ($arg). Skipping..."
+done
+
+if [[ ${#FILES[@]} == 0 ]] && ! $INTERACTIVE; then
+	echo "No files to copy."
+	exit 1
+fi
+
+mount_drive
+trap unmount_drive EXIT # unmount when exiting script
+(( ${#FILES[@]} > 0 )) && rsync_command "${FILES[@]}"
+$INTERACTIVE && interactive_copy_files
 

@@ -50,7 +50,7 @@ ldir() {
 ##################
 
 _usage() {
-	echo "Usage: lkitty [options]"
+	echo "Usage: lkitty [-d directory -feh]"
 	echo ""
 	echo "Options:"
 	echo "	-d, --directory DIR   Specify the directory"
@@ -73,30 +73,12 @@ eval set -- "$parse"
 
 while true; do
 	case "$1" in
-	-d | --directory)
-		dir="$2"
-		shift 2
-		;;
-	-e | --editor)
-		e=true
-		shift 
-		;;
-	-f | --file-manager)
-		f=true
-		shift
-		;;
-	-h | --help)
-		_usage
-		exit 0
-		;;
-	--)
-		shift
-		break
-		;;
-	*)
-		echo "error: $1"
-		exit 1
-		;;
+	-d | --directory) dir="$2"; shift 2 ;;
+	-e | --editor) e=true; shift ;;
+	-f | --file-manager) f=true; shift ;;
+	-h | --help) _usage; exit 0 ;;
+	--) shift; break ;;
+	*) echo "Error: $1"; exit 1 ;;
 	esac
 done
 
@@ -104,6 +86,7 @@ if [[ -z "$KITTY_PID" ]]; then
 	echo "Error: Must be launched using kitty as your terminal."
 	exit 1
 fi
+
 if (( $# > 0 )); then
 	echo "Invalid option(s) $*"
 	_usage
