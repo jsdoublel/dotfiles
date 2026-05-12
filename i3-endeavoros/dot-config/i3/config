@@ -55,7 +55,7 @@ gaps inner 6
 #title_align center
 
 # Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier Ctrl
+floating_modifier $alt
 
 # switch/iterate between workspaces
 bindsym $mod+Tab workspace next
@@ -155,7 +155,7 @@ bindsym $mod+BackSpace exec --no-startup-id kitty
 bindsym $mod+g exec --no-startup-id kitty lkitty
 
 # start terminal with nvim
-bindsym $mod+y exec --no-startup-id kitty lkitty -v
+bindsym $mod+y exec --no-startup-id kitty lkitty -e
 bindsym $mod+u exec --no-startup-id kitty lkitty -f
 
 # kill focused window
@@ -275,7 +275,7 @@ bindsym $mod+Ctrl+Shift+p exec --no-startup-id playerctl previous
 bindsym $mod+w exec --no-startup-id /usr/bin/helium-browser
 # bindsym $mod+w exec --no-startup-id /usr/bin/zen-browser
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
-bindsym $mod+Shift+s exec --no-startup-id flameshot screen -r > $screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to $screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
+bindsym $mod+Shift+s exec --no-startup-id flameshot gui -r > $screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to $screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
 bindsym $mod+m exec --no-startup-id prismlauncher
 
 bindsym $mod+$alt+h exec --no-startup-id dunstctl history-pop
@@ -342,6 +342,7 @@ for_window [class="qBittorrent"] focus
 for_window [class="Slack"] focus
 for_window [instance="libreoffice"] move container to workspace $ws4
 for_window [instance="libreoffice"] focus
+no_focus [class="Zathura"]
 
 ##############
 # compositor #

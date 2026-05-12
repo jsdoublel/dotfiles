@@ -14,7 +14,8 @@ dir="$HOME/.config/rofi/"
 theme='powermenu'
 
 # CMDs
-uptime="`uptime -p | sed -e 's/up //g'`"
+uptime=$(fastfetch -l none -s uptime | sed -e 's/Uptime: //')
+# uptime="`uptime -p | sed -e 's/up //g'`"
 host=`hostname`
 
 # Options

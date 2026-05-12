@@ -96,7 +96,7 @@ alias update="eos-update --yay --nvidia"
 alias logout="i3-msg exit"
 alias grep="grep --color=auto"
 alias neofetch="fastfetch"
-alias lvim="lkitty -v"
+alias lvim="lkitty -e"
 alias phylonet="java -jar /usr/share/phylonet/PhyloNet.jar"
 
 ###################### SECRETES ###############################

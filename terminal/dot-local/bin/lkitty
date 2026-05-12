@@ -3,16 +3,8 @@
 
 SEARCH_PATHS=("$HOME")
 
-if command -v bat > /dev/null 2>&1; then 
-	FILES_PREVIEW="bat --color=always --style=plain {}"
-else
-	FILES_PREVIEW="cat {}"
-fi
-if command -v lsd >/dev/null 2>&1; then
-	FOLDERS_PREVIEW="lsd --tree --depth=3 --color=always --icon=always {}"
-else
-	FOLDERS_PREVIEW="ls --color=always {}"
-fi
+command -v bat > /dev/null && FILES_PREVIEW="bat --color=always --style=plain {}" || FILES_PREVIEW="cat {}"
+command -v lsd >/dev/null && FOLDERS_PREVIEW="lsd --tree --depth=3 --color=always --icon=always {}" || FOLDERS_PREVIEW="ls --color=always {}"
 
 fzf_command() {
 	fzf --style 'full:rounded' --border rounded --border-label "$1" --preview="$2"
@@ -34,13 +26,13 @@ lkitty() {
 	kitty @ focus-window --match "id:$nvim_id"
 }
 
-# Asks for file and launches editor (nvim) in new tab.
-lvim() {
+# Asks for file and launches editor in new tab.
+leditor() {
 	local file # file to open
-	file=$(fd . "${SEARCH_PATHS[@]}" -t f | fzf_command ' NVIM ' "$FILES_PREVIEW")
+	file=$(fd . "${SEARCH_PATHS[@]}" -t f | fzf_command " ${EDITOR^^} " "$FILES_PREVIEW")
 	[[ -z $file ]] && exit 1
 	kitty @ set-tab-title --match "id:$KITTY_WINDOW_ID" "$(basename "$file")"
-	nvim "$file"
+	$EDITOR "$file"
 }
 
 # Asks for directory and launches file browser (with exo-open). I tried the
@@ -48,9 +40,9 @@ lvim() {
 # blank terminal window.
 ldir() {
 	local dir # directory to open 
-	dir=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' THUNAR ' "$FOLDERS_PREVIEW")
+	[[ -z "$1" ]] && dir=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' THUNAR ' "$FOLDERS_PREVIEW") || dir="$1"
 	[[ -z $dir ]] && exit 1
-	setsid exo-open "$dir" >/dev/null 2>&1 
+	setsid exo-open "$dir" >/dev/null 2>&1
 }
 
 ##################
@@ -62,17 +54,17 @@ _usage() {
 	echo ""
 	echo "Options:"
 	echo "	-d, --directory DIR   Specify the directory"
-	echo "	-f, --file-manager    Launches file-manager (instead of tmux)"
-	echo "	-v, --vim             Launches nvim (instead of tmux)"
+	echo "	-f, --file-manager    Launches file-manager (instead of kitty)"
+	echo "	-e, --editor          Launches nvim (instead of kitty)"
 	echo "	-h, --help            Display this help message"
 }
 
 dir=""
-v=false
+e=false
 f=false
 
-ARGS=d:vfh
-LARGS=directory:,vim,file-manager,help
+ARGS=d:efh
+LARGS=directory:,editor,file-manager,help
 parse=$(getopt --options $ARGS --longoptions $LARGS --name "lkitty" -- "$@")
 if [[ $? != 0 ]]; then
 	exit 1
@@ -85,14 +77,14 @@ while true; do
 		dir="$2"
 		shift 2
 		;;
-	-v | --vim)
-		v=true
+	-e | --editor)
+		e=true
 		shift 
 		;;
 	-f | --file-manager)
-	f=true
-	shift
-	;;
+		f=true
+		shift
+		;;
 	-h | --help)
 		_usage
 		exit 0
@@ -108,20 +100,20 @@ while true; do
 	esac
 done
 
-if [ ! -n "$KITTY_PID" ]; then
+if [[ -z "$KITTY_PID" ]]; then
 	echo "Error: Must be launched using kitty as your terminal."
 	exit 1
 fi
-if [ ! -z "$@" ]; then
-	echo "Invalid option(s) \"$@\""
+if (( $# > 0 )); then
+	echo "Invalid option(s) $*"
 	_usage
 	exit 1
 fi
 
-if $v; then
-	lvim
+if $e; then
+	leditor
 elif $f; then
-	ldir
+	ldir "$dir"
 else 
 	lkitty "$dir"
 fi
