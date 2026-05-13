@@ -15,8 +15,7 @@ mount_drive() {
 			echo  "Error: USB drive with UUID $DRIVE_UUID not found. Is it plugged in?" 
 			return 1
 		fi
-		sudo mkdir -p "$MOUNT_DIR"
-		sudo mount -U "$DRIVE_UUID" "$MOUNT_DIR"
+		sudo mount -m -U "$DRIVE_UUID" "$MOUNT_DIR"
 	fi
 }
 
@@ -104,5 +103,5 @@ fi
 mount_drive
 trap unmount_drive EXIT # unmount when exiting script
 (( ${#FILES[@]} > 0 )) && rsync_command "${FILES[@]}"
-$INTERACTIVE && interactive_copy_files
+$INTERACTIVE && interactive_copy_files || true
 

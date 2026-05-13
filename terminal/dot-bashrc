@@ -97,7 +97,7 @@ alias logout="i3-msg exit"
 alias grep="grep --color=auto"
 alias neofetch="fastfetch"
 alias lvim="lkitty -e"
-alias cpd="copy-to-drive -u 0DC0DDEA36E8D6DD -i"
+alias cpd="copy-to-drive -u 0DC0DDEA36E8D6DD"
 alias phylonet="java -jar /usr/share/phylonet/PhyloNet.jar"
 
 ###################### SECRETES ###############################

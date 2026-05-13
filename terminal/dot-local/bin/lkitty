@@ -15,15 +15,13 @@ fzf_command() {
 # window only has 1 tab; otherwise, launches a new window
 lkitty() {
 	local dir # project directory
-	local ltype # type of kitty launch
-	local nvim_id # id of nvim kitty tab
+	local new_tab_id # id of new kitty tab
 	[[ -z $1 ]] && dir=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' KITTY ' "$FOLDERS_PREVIEW") || dir="$1"
 	[[ -z $dir ]] && exit 1
-	[[ $(kitty @ ls | jq ".[] | select(.is_focused) | .tabs | length") == "1" ]] && ltype="overlay" || ltype="os-window"
-	nvim_id=$(kitty @ launch --type="$ltype" --cwd="$dir" nvim .)
-	kitty @ set-tab-title --match "id:$nvim_id" "nvim"
-	kitty @ launch --match "id:$nvim_id" --type=tab --cwd="$dir" bash > /dev/null
-	kitty @ focus-window --match "id:$nvim_id"
+	new_tab_id=$(kitty @ launch --type=tab --cwd="$dir" nvim .)
+	kitty @ set-tab-title --match "id:$new_tab_id" "$(basename "$dir")"
+	kitty @ launch --match "id:$new_tab_id" --type=window --cwd="$dir" bash > /dev/null
+	kitty @ focus-window --match "id:$new_tab_id"
 }
 
 # Asks for file and launches editor in new tab.
