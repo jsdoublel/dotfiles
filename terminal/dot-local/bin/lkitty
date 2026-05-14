@@ -4,7 +4,7 @@
 SEARCH_PATHS=("$HOME")
 
 command -v bat > /dev/null && FILES_PREVIEW="bat --color=always --style=plain {}" || FILES_PREVIEW="cat {}"
-command -v lsd >/dev/null && FOLDERS_PREVIEW="lsd --tree --depth=3 --color=always --icon=always {}" || FOLDERS_PREVIEW="ls --color=always {}"
+command -v eza >/dev/null && FOLDERS_PREVIEW="eza --tree --level=3 --color=always --icons=auto --git {}" || FOLDERS_PREVIEW="ls --color=always {}"
 
 fzf_command() {
 	fzf --style 'full:rounded' --border rounded --border-label "$1" --preview="$2"
