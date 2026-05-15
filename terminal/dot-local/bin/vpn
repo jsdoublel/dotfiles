@@ -1,0 +1,89 @@
+#!/usr/bin/env python
+
+import subprocess
+import time
+import requests
+import re
+import sys
+
+# --- Configuration ---
+QBIT_URL = "http://localhost:8080"
+QBIT_USER = "jsdoublel"
+QBIT_PASS = "firewwme"
+
+
+def update_qbit_port(port):
+    try:
+        session = requests.Session()
+        session.post(
+            f"{QBIT_URL}/api/v2/auth/login",
+            data={"username": QBIT_USER, "password": QBIT_PASS},
+        )
+        session.post(
+            f"{QBIT_URL}/api/v2/app/setPreferences",
+            data={"json": f'{{"listen_port": {port}, "upnp": false}}'},
+        )
+        print(
+            f"[{time.strftime('%H:%M:%S')}] Success: qBittorrent listening on port {port}"
+        )
+    except Exception as e:
+        print(f"Failed to update qBittorrent: {e}. Is qBittorrent running?")
+
+
+def connect_vpn():
+    print("Connecting to Proton VPN...")
+    # Fire the standard CLI connection
+    subprocess.run(["protonvpn", "connect", "--p2p"])
+    print("Waiting 5 seconds for the connection to settle and routing to stabilize...")
+    time.sleep(5)
+
+
+def disconnect_vpn():
+    print("\nDisconnecting Proton VPN...")
+    subprocess.run(["protonvpn", "disconnect"])
+    print("VPN disconnected cleanly.")
+
+
+def keep_alive():
+    print("\nStarting NAT-PMP loop. Press Ctrl+C to stop and disconnect.")
+    port = 0
+    try:
+        while True:
+            # Request the UDP mapping
+            subprocess.run(
+                ["natpmpc", "-a", "1", "0", "udp", "60", "-g", "10.2.0.1"],
+                capture_output=True,
+            )
+            # Request the TCP mapping
+            result = subprocess.run(
+                ["natpmpc", "-a", "1", "0", "tcp", "60", "-g", "10.2.0.1"],
+                capture_output=True,
+                text=True,
+            )
+
+            # Parse the assigned public port
+            match = re.search(r"Mapped public port (\d+)", result.stdout)
+            if match and match.group(1) != port:
+                port = match.group(1)
+                update_qbit_port(port)
+            elif match:
+                print(
+                    f"[{time.strftime('%H:%M:%S')}] Port {port} renewed successfully."
+                )
+            else:
+                print(
+                    f"[{time.strftime('%H:%M:%S')}] Could not map port. Server might have dropped the request."
+                )
+
+            # Sleep 45s to renew before the 60s expiration
+            time.sleep(45)
+
+    except KeyboardInterrupt:
+        # Catches Ctrl+C to cleanly disconnect the VPN before closing
+        disconnect_vpn()
+        sys.exit(0)
+
+
+if __name__ == "__main__":
+    connect_vpn()
+    keep_alive()
