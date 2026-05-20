@@ -9,10 +9,16 @@ import sys
 # --- Configuration ---
 QBIT_URL = "http://localhost:8080"
 QBIT_USER = "jsdoublel"
-QBIT_PASS = "firewwme"
+QBIT_PASS = "admin1"
 
 
-def update_qbit_port(port):
+def update_port(port):
+    # update firewall to allow port
+    print(f"[{time.strftime('%H:%M:%S')}] Opening port = {port} in firewall.")
+    subprocess.run(["sudo", "firewall-cmd", f"--add-port={port}/udp"])
+    subprocess.run(["sudo", "firewall-cmd", f"--add-port={port}/tcp"])
+    subprocess.run(["sudo", "firewall-cmd", "--reload"])
+    # update qBittorrent port
     try:
         session = requests.Session()
         session.post(
@@ -65,7 +71,7 @@ def keep_alive():
             match = re.search(r"Mapped public port (\d+)", result.stdout)
             if match and match.group(1) != port:
                 port = match.group(1)
-                update_qbit_port(port)
+                update_port(port)
             elif match:
                 print(
                     f"[{time.strftime('%H:%M:%S')}] Port {port} renewed successfully."

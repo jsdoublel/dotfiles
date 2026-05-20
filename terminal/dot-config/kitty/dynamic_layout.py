@@ -11,8 +11,12 @@ def layout_name(short_layout: str) -> str:
 
 
 def on_resize(boss: Boss, window: Window, data: Dict[str, Any]) -> None:
-    assert boss.active_tab is not None, "No active tab"
-    _, _, width, height, _, _ = viewport_for_window(window.os_window_id)
+    if boss.active_tab is None:
+        return
+    try:
+        _, _, width, height, _, _ = viewport_for_window(window.os_window_id)
+    except:
+        return
     new_layout = layout_name("tall") if width >= height else layout_name("fat")
     cur_layouts = boss.active_tab.enabled_layouts
     if new_layout not in cur_layouts or len(cur_layouts) == TOTAL_LAYOUTS:
