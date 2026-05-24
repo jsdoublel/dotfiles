@@ -5,24 +5,6 @@
 [[ "$(whoami)" = "root" ]] && return
 [[ -z "$FUNCNEST" ]] && export FUNCNEST=100          # limits recursive functions, see 'man bash'
 
-####################### PATH ##########################
-export PATH="$PATH:$HOME/.cargo/bin"
-export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$HOME/.go/bin"
-export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
-
-####################### VARIABLES #####################
-export XDG_CONFIG_HOME="$HOME/.config/"
-export XDG_DATA_HOME="$HOME/.local/share/"
-export XDG_MUSIC_DIR="$HOME/Music"
-export EDITOR="nvim"
-export BROWSER="helium"
-export TERMINAL="usr/bin/kitty"
-export ANDROID_HOME="$HOME/.android_sdk"
-export QT_QPA_PLATFORMTHEME=qt6ct
-export R_LIBS_USER="$HOME/.R/library/"
-export MPD_HOST="/run/user/1000/mpd/socket"
-
 ###################### BINDINGS ######################
 # set -o vi # enable vim keybindings on terminal
 ## Use the up and down arrow keys for finding a command in history

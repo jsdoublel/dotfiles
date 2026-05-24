@@ -158,6 +158,9 @@ bindsym $mod+g exec --no-startup-id kitty lkitty
 bindsym $mod+y exec --no-startup-id kitty lkitty -e
 bindsym $mod+u exec --no-startup-id kitty lkitty -f
 
+# start notes
+bindsym $mod+z exec --no-startup-id kitty zk new --no-input "$ZK_NOTEBOOK_DIR/daily"
+
 # kill focused window
 bindsym $mod+q kill
 

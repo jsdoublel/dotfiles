@@ -1,0 +1,24 @@
+#
+# ~/.bash_profile
+
+# ####################### PATH ##########################
+export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.go/bin"
+export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
+
+# ####################### VARIABLES #####################
+export XDG_CONFIG_HOME="$HOME/.config/"
+export XDG_DATA_HOME="$HOME/.local/share/"
+export XDG_MUSIC_DIR="$HOME/Music"
+export XDG_DOCUMENTS_DIR="$HOME/Documents"
+export EDITOR="nvim"
+export BROWSER="helium"
+export TERMINAL="usr/bin/kitty"
+export ANDROID_HOME="$HOME/.android_sdk"
+export QT_QPA_PLATFORMTHEME=qt6ct
+export R_LIBS_USER="$HOME/.R/library/"
+export MPD_HOST="/run/user/1000/mpd/socket"
+export ZK_NOTEBOOK_DIR="$XDG_DOCUMENTS_DIR/Notes/"
+
+[[ -f ~/.bashrc ]] && . ~/.bashrc

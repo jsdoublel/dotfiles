@@ -18,7 +18,7 @@ lkitty() {
 	local new_tab_id # id of new kitty tab
 	[[ -z $1 ]] && dir=$(fd . "${SEARCH_PATHS[@]}" -t d | fzf_command ' KITTY ' "$FOLDERS_PREVIEW") || dir="$1"
 	[[ -z $dir ]] && exit 1
-	new_tab_id=$(kitty @ launch --type=tab --cwd="$dir" nvim .)
+	new_tab_id=$(kitty @ launch --type=tab --cwd="$dir" bash -ic 'nvim .') # launch indirectly to get env from .bashrc
 	kitty @ set-tab-title --match "id:$new_tab_id" "$(basename "$dir")"
 	kitty @ launch --match "id:$new_tab_id" --type=window --cwd="$dir" bash > /dev/null
 	kitty @ focus-window --match "id:$new_tab_id"
