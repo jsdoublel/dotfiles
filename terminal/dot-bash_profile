@@ -20,5 +20,7 @@ export QT_QPA_PLATFORMTHEME=qt6ct
 export R_LIBS_USER="$HOME/.R/library/"
 export MPD_HOST="/run/user/1000/mpd/socket"
 export ZK_NOTEBOOK_DIR="$XDG_DOCUMENTS_DIR/Notes/"
+export MANPAGER="nvim +Man! +'setlocal signcolumn=no'"
+export MANWIDTH=95
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
