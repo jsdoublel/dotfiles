@@ -24,6 +24,7 @@ text/calendar=userapp-Thunderbird-8VGG72.desktop
 application/x-extension-ics=userapp-Thunderbird-8VGG72.desktop
 x-scheme-handler/webcals=userapp-Thunderbird-8VGG72.desktop
 x-scheme-handler/slack=slack.desktop
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
 
 [Added Associations]
 image/png=feh.desktop;gimp.desktop;

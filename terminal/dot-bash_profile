@@ -22,5 +22,8 @@ export MPD_HOST="/run/user/1000/mpd/socket"
 export ZK_NOTEBOOK_DIR="$XDG_DOCUMENTS_DIR/Notes/"
 export MANPAGER="nvim +Man! +'setlocal signcolumn=no'"
 export MANWIDTH=95
+#
+###################### SECRETES ###############################
+[[ -f "$HOME/.secrets" ]] && source "$HOME/.secrets"
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc

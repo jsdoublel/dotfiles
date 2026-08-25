@@ -13,12 +13,7 @@ QBIT_PASS = "admin1"
 
 
 def update_port(port):
-    # update firewall to allow port
-    print(f"[{time.strftime('%H:%M:%S')}] Opening port = {port} in firewall.")
-    subprocess.run(["sudo", "firewall-cmd", f"--add-port={port}/udp"])
-    subprocess.run(["sudo", "firewall-cmd", f"--add-port={port}/tcp"])
-    subprocess.run(["sudo", "firewall-cmd", "--reload"])
-    # update qBittorrent port
+    """update qBittorrent port"""
     try:
         session = requests.Session()
         session.post(
