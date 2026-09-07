@@ -8,14 +8,16 @@ rsync_command() {
 	rsync -ah --progress "$@" "$MOUNT_DIR"
 }
 
-# Mounts drive using global $DRIVE_UUID and $MOUNT_DIR variables
+# Mounts drive using global $DRIVE_UUID variable. Sets global $DEVICE and $MOUNT_DIR.
 mount_drive() {
-	if ! mountpoint -q "$MOUNT_DIR" > /dev/null; then	# check if drive is mounted 
-		if ! blkid -U "$DRIVE_UUID" > /dev/null; then	# check if drive exists
-			echo  "Error: USB drive with UUID $DRIVE_UUID not found. Is it plugged in?" 
-			return 1
-		fi
-		sudo mount -m -U "$DRIVE_UUID" "$MOUNT_DIR"
+	DEVICE=$(blkid -U "$DRIVE_UUID") || {
+		echo "Error: USB drive with UUID $DRIVE_UUID not found. Is it plugged in?"
+		return 1
+	}
+	MOUNT_DIR=$(findmnt -no TARGET "$DEVICE" || true)	# check if drive is already mounted
+	if [[ -z "$MOUNT_DIR" ]]; then
+		udisksctl mount -b "$DEVICE" || return 1
+		MOUNT_DIR=$(findmnt -no TARGET "$DEVICE")
 	fi
 }
 
@@ -33,7 +35,7 @@ interactive_copy_files() {
 	done
 }
 
-# Unmounts drive mounted at $MOUNT_DIR. Asks user if $INTERACTIVE == true.
+# Unmounts drive at $DEVICE. Asks user if $INTERACTIVE == true.
 unmount_drive() {
 	local answer
 	$INTERACTIVE && read -rp "Unmount drive? [y/N] " answer
@@ -45,8 +47,7 @@ unmount_drive() {
 			echo -ne "$(grep -e "^Dirty:" /proc/meminfo)\t\t\r"
 			sleep 2
 		done
-		if sudo umount "$MOUNT_DIR"; then
-			sudo rmdir "$MOUNT_DIR"
+		if udisksctl unmount -b "$DEVICE"; then
 			printf "\nDone!\n"
 		else
 			echo "Error: Failed to unmount drive."
@@ -86,8 +87,6 @@ if [[ -z $DRIVE_UUID ]]; then
 	echo "Error: Drive UUID is required."
 	exit 1
 fi
-MOUNT_DIR="/mnt/mnt$DRIVE_UUID"
-
 # read positional arguments
 FILES=()
 shift $((OPTIND -1)) # shift pass positional flags
