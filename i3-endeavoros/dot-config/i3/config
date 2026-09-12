@@ -410,6 +410,7 @@ exec --no-startup-id /usr/bin/dunst --config $config/dunst/dunstrc
 # Autostart apps as you like
 exec_always --no-startup-id autotiling
 exec --no-startup-id openrgb -p profile
+exec --no-startup-id sleep 1 && pano-scrobbler -m
 # exec --no-startup-id protonvpn connect
 exec --no-startup-id sleep 2 && discord
 # exec --no-startup-id sleep 4 && slack
@@ -420,6 +421,11 @@ exec --no-startup-id sleep 2 && discord
 ###############
 # if you do not use dex: exec --no-startup-id dex --autostart --environment i3
 # you need to have tray apps started manually one by one:
+
+# snixembed: provides the StatusNotifierWatcher and proxies SNI tray icons
+# (e.g. pano-scrobbler) into polybar's legacy XEmbed tray. Must start before
+# any app that registers an SNI icon.
+exec --no-startup-id snixembed --fork
 
 # start blueberry app for managing bluetooth devices from tray:
 # exec --no-startup-id blueberry-tray
