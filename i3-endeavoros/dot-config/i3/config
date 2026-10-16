@@ -275,11 +275,12 @@ bindsym $mod+Ctrl+Shift+p exec --no-startup-id playerctl previous
 ## App shortcuts
 # bindsym $mod+w exec --no-startup-id /usr/bin/google-chrome-stable
 # bindsym $mod+w exec --no-startup-id /usr/bin/firefox
-bindsym $mod+w exec --no-startup-id /usr/bin/zen-browser
 # bindsym $mod+w exec --no-startup-id /usr/bin/zen-browser
+bindsym $mod+w exec --no-startup-id /usr/bin/helium-browser
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 bindsym $mod+Shift+s exec --no-startup-id flameshot gui -r > $screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to $screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
-bindsym $mod+m exec --no-startup-id prismlauncher
+# bindsym $mod+m exec --no-startup-id prismlauncher
+bindsym $mod+m exec --no-startup-id sone
 
 bindsym $mod+$alt+h exec --no-startup-id dunstctl history-pop
 
@@ -325,6 +326,7 @@ assign [class="(?i)Minecraft"] $ws4
 assign [class="PrismLauncher"] $ws5
 assign [class="(?i)zoom"] $ws6
 assign [class="(?i)thunderbird"] $ws7
+assign [class="(?i)sone"] $ws7
 assign [class="Slack"] $ws9
 assign [class="qBittorrent"] $ws4
 assign [class="com.github.th-ch.youtube-music"] $ws7
@@ -343,6 +345,7 @@ for_window [class=(?i)minecraft] focus
 for_window [class=(?i)code] focus
 for_window [class=(?i)jetbrains-studio] focus
 for_window [class=(?i)thunderbird] focus
+for_window [class=(?i)sone] focus
 for_window [class="qBittorrent"] focus
 for_window [class="Slack"] focus
 for_window [instance="libreoffice"] move container to workspace $ws4
@@ -410,11 +413,10 @@ exec --no-startup-id /usr/bin/dunst --config $config/dunst/dunstrc
 # Autostart apps as you like
 exec_always --no-startup-id autotiling
 exec --no-startup-id openrgb -p profile
-exec --no-startup-id sleep 1 && pano-scrobbler -m
-# exec --no-startup-id protonvpn connect
+# exec --no-startup-id sleep 1 && easyeffects --gapplication-service
+# exec --no-startup-id sleep 1 && pano-scrobbler -m
+exec --no-startup-id sleep 2 && qbittorrent --no-splash
 exec --no-startup-id sleep 2 && discord
-# exec --no-startup-id sleep 4 && slack
-# exec --no-startup-id sleep 5 && /usr/bin/thunderbird
 
 ###############
 # system tray #
